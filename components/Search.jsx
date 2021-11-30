@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 
-export default function Search({hidden}) {
+export default function Search({hidden, handleSearch}) {
 
     const [searchResults, setSearchResults] = useState([]);
     const [formData, setFormData] = useState({search: ''});
@@ -11,6 +13,7 @@ export default function Search({hidden}) {
     const updateSearchResults = (request) => {
 
         if(request){
+            // Backend call
             const data = fakeData.filter(el => el.includes(request));
 
             setSearchResults(data);
@@ -19,6 +22,7 @@ export default function Search({hidden}) {
         }
        
     }
+
 
     const onInputChange = (e) => {
 
@@ -35,8 +39,8 @@ export default function Search({hidden}) {
       };
 
     return (
-            <div className={`absolute top-2 right-10 ${hidden ? 'hidden' : ''}`}>
-                
+            <div id="search" className={`absolute top-2 right-10 ${hidden ? 'hidden' : ''}`}>
+                <FontAwesomeIcon  onClick={handleSearch} className='absolute text-white text-2xl z-40 -left-10 top-2' icon={faWindowClose} />
                 <div className="inline-flex flex-col justify-center relative text-gray-500">
                     <div className="relative">
                         <input onChange={onInputChange} type="text" name="search" className="p-2 pl-8 rounded border border-gray-200 bg-gray-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent" placeholder="search..." value={formData.search} />
