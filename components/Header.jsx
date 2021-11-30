@@ -15,7 +15,7 @@ export default function Header() {
     }
 
     return (
-        <header className="text-gray-100 bg-gray-900 body-font shadow w-full" style={{fontFamily: `'Roboto', sans-serif;`, backgroundColor: '#202020;'}}>
+        <header className="text-gray-100 bg-gray-900 body-font shadow w-full" style={{fontFamily: `'Roboto', sans-serif`, backgroundColor: '#202020'}}>
         <div className='flex border border-gray-800 border-l-0 border-r-0 justify-between px-0 sm:px-20'>
 
         <div className='flex items-center border-gray-800 px-4 py-2 border-l border-r m-0'>
