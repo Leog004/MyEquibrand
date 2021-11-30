@@ -5,7 +5,9 @@ export default function Search({hidden}) {
     const [search, setSearch] = useState([]);
 
 
-    const handleOnChange = () => {}
+    const handleOnChange = () => {
+        
+    }
 
     return (
             <div className={`absolute top-2 right-10 ${hidden ? 'hidden' : ''}`}>
