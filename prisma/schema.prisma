@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User_Users {
+  UserID             Int       @id(map: "PK_User_Users") @default(autoincrement())
+  AccountNumber      String?   @db.NVarChar(150)
+  Name               String?   @db.NVarChar(150)
+  Address            String?   @db.NVarChar(150)
+  Address_2          String?   @map("Address 2") @db.NVarChar(150)
+  City               String?   @db.NVarChar(150)
+  State              String?   @db.NVarChar(150)
+  Zip                String?   @db.NVarChar(150)
+  Phone              String?   @db.NVarChar(150)
+  Email              String?   @db.NVarChar(150)
+  Password           String?   @default("N'fDAC3Cjv4pp6gxk6zYeYVg=='", map: "DF_User_Users_Password") @db.NVarChar(150)
+  isShopper          String?   @default("N'False'", map: "DF_User_Users_isShopper") @db.NVarChar(5)
+  isShopperLogged    DateTime? @db.Date
+  isDealer           String?   @default("N'False'", map: "DF_User_Users_isDealer") @db.NVarChar(5)
+  Salesperson        String?   @db.NVarChar(50)
+  Salesrep           String?   @db.NVarChar(150)
+  Teritory           String?   @db.NVarChar(150)
+  DateCreated        DateTime? @default(now(), map: "DF_User_Users_DateCreated") @db.Date
+  LastLog            DateTime? @db.Date
+  InviteSent         DateTime? @db.Date
+  Notifications      String?   @default("N'False'", map: "DF_User_Users_Notifications") @db.NVarChar(150)
+  ProfileImage       String?   @db.NVarChar(50)
+  EmployeeID         String?   @db.NVarChar(50)
+  Region             String?   @db.NVarChar(50)
+  PasswordRequestKey String?   @db.NVarChar(50)
+}

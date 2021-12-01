@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { signIn, signOut, useSession} from 'next-auth/react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSearch, faIdCard } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSearch, faIdCard, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Search } from '.';
 
 export default function Header() {
@@ -25,9 +25,15 @@ export default function Header() {
             <Link href='#'>
                 {
                     session 
-                    ?   <button className='cursor-pointer uppercase font-semibold text-xs'> 
-                            <FontAwesomeIcon className='mr-2' icon={faIdCard}/>
-                        </button>
+                    ?   <div className='flex'>
+                            <button className='cursor-pointer uppercase font-semibold text-xs'> 
+                                <FontAwesomeIcon className='mr-4' icon={faIdCard}/>
+                            </button>
+                            |
+                            <button onClick={() => signOut()} className='cursor-pointer uppercase font-semibold text-xs'> 
+                                <FontAwesomeIcon className='ml-4' icon={faSignOutAlt}/>
+                            </button>   
+                        </div>
                     :   <button type='button' onClick={() => signIn()} className='cursor-pointer uppercase font-semibold text-xs'> 
                             <FontAwesomeIcon className='mr-2' icon={faUser}/> Sign In
                         </button>

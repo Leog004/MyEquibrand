@@ -5,7 +5,7 @@ const HeaderImage = 'http://myequibrand.com/img/4818875210.jpg';
 const LinearGradient = 'linear-gradient(90deg, #303030 0%, #c6770070 100%)'
 
 
-export default function Hero() {
+export default function Hero({session}) {
     return (
         <>
         <div id='headerImage' className="h-lg bg-center" style={{backgroundImage: `${LinearGradient},url(${HeaderImage})`, backgroundSize: 'cover'}}>
@@ -18,7 +18,7 @@ export default function Hero() {
             </div>
         </div>
         
-        <FeaturedProduct/>
+        {session && <FeaturedProduct/>}
         </>
     )
 }

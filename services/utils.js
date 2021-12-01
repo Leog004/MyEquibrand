@@ -25,6 +25,11 @@ export const encryptPassword = (pass) => {
 
 export const dycryptPassword = (pass) => {
 
+     const crypto = require("crypto");
+
+     const algorithm = "des-ecb"; 
+
+     const key = Buffer.from("d0e276d0144890d3", "hex");
 
      const decipher = crypto.createDecipheriv(algorithm, key, null);
 

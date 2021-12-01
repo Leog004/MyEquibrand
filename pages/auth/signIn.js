@@ -1,8 +1,7 @@
 import { getCsrfToken } from "next-auth/react"
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import { Subscribe } from "../../components";
-// toast.configure();
+toast.configure();
 
 
 export default function SignIn({ csrfToken, error }) {

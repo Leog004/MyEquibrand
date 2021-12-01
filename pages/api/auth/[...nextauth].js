@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from 'next-auth/providers/github'
 import { PrismaClient } from '.prisma/client';
-import { encryptPassword } from "../../../services/utils";
+import { dycryptPassword, encryptPassword } from "../../../services/utils";
 // import GitHubProvider from 'next-auth/providers/github'
 
 // const Cryptr = require('cryptr');
@@ -29,6 +29,7 @@ export default NextAuth({
                 // Database Look Up
 
                 const pass = encryptPassword(credentials.password);
+                const secondaPass = dycryptPassword(pass);
 
                 // const password = credentials.password;
                 // // use a hex key here
@@ -37,20 +38,36 @@ export default NextAuth({
                 // let encrypted = cipher.update(password, 'utf8', 'hex');
                 // encrypted += cipher.final('hex');
 
-                //console.log("Encrypted: ", encrypted);
+                console.log(`Encrypt: ${pass} | Dycrypt: ${secondaPass}`);
 
                 const prisma = new PrismaClient();
-                const rawSQL = `User_G_User_Login`;
-                const result = await prisma.$queryRawUnsafe(`${rawSQL} @Email='${credentials.username}', @Password='${encrypted}'`)
+                const rawSQL = `_G_Login`;
+                const result = await prisma.$queryRawUnsafe(`${rawSQL} @Email='${credentials.username}', @Password='${pass}'`)
 
+                //console.log(result, pass);
 
-                if(result.length > 0 && result[0]["status"]){
+                if(result.length > 0){
+
+                    let state = [];
+
+                    for(let x = 0; x < result.length; x++){
+
+                        let obj = {
+                            'Privilege' : result[x]['Privilege'],
+                            'PrivilegeID' : result[x]['PrivilegeID'],
+                            'PrivilegeType' : result[x]['PrivilegeType'],
+                            'LoginPrivilege' : result[x]['LoginPrivilege'],
+                            'Type' : result[x]['Type']
+                        }
+
+                        state.push(obj);
+                    }
+
                     return {
                         id: result[0]['UserID'],         
-                        name: `${result[0]['First Name']} ${result[0]['Last Name']}`,
+                        name: result[0]['Name'],
                         email: result[0]['Email'],
-                        notifications: result[0]['Notifications'],
-                        privaleges: result[0]['Privaleges']
+                        state
                     };
                 }else{
                     return null;
@@ -70,6 +87,9 @@ export default NextAuth({
                 if (user) {
                     token.id = user.id;
 
+                    if(user?.state)
+                        token.state = user.state;
+
                     if(user?.notifications)
                         token.notifications = user.notifications;
 
@@ -82,6 +102,9 @@ export default NextAuth({
             session: async ({ session, token }) => {
 
                 session.id = token.id;
+
+                if(token?.state)
+                    session.state = token.state
 
                 if(token?.notifications)
                     session.user.notifications = token.notifications
