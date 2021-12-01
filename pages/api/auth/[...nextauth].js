@@ -2,11 +2,12 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from 'next-auth/providers/github'
 import { PrismaClient } from '.prisma/client';
+import { encryptPassword } from "../../../services/utils";
 // import GitHubProvider from 'next-auth/providers/github'
 
 // const Cryptr = require('cryptr');
-const crypto = require("crypto");
-const algorithm = "des-ecb"; 
+// const crypto = require("crypto");
+// const algorithm = "des-ecb"; 
 
 export default NextAuth({
     providers: [
@@ -27,12 +28,14 @@ export default NextAuth({
             authorize: async (credentials) => {
                 // Database Look Up
 
-                const password = credentials.password;
-                // use a hex key here
-                const key = Buffer.from("d0e276d0144890d3", "hex");
-                const cipher = crypto.createCipheriv(algorithm, key, null);
-                let encrypted = cipher.update(password, 'utf8', 'hex');
-                encrypted += cipher.final('hex');
+                const pass = encryptPassword(credentials.password);
+
+                // const password = credentials.password;
+                // // use a hex key here
+                // const key = Buffer.from("d0e276d0144890d3", "hex");
+                // const cipher = crypto.createCipheriv(algorithm, key, null);
+                // let encrypted = cipher.update(password, 'utf8', 'hex');
+                // encrypted += cipher.final('hex');
 
                 //console.log("Encrypted: ", encrypted);
 
@@ -40,16 +43,6 @@ export default NextAuth({
                 const rawSQL = `User_G_User_Login`;
                 const result = await prisma.$queryRawUnsafe(`${rawSQL} @Email='${credentials.username}', @Password='${encrypted}'`)
 
-                // const cryptr = new Cryptr('myTotalySecretKey'); 
-                // const decryptedString = cryptr.encrypt(credentials.password);         
-                //console.log(decryptedString);
-                //Z1YI88QPVZ5+k8zNU08K8A==
-
-
-                // const decipher = crypto.createDecipheriv(algorithm, key, null);
-                // let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-                // decrypted += decipher.final('utf8');
-                // console.log("Decrypted: ", decrypted);
 
                 if(result.length > 0 && result[0]["status"]){
                     return {
@@ -73,48 +66,31 @@ export default NextAuth({
 
     },
     callbacks: {
+            jwt: async ({ token, user }) => {            
+                if (user) {
+                    token.id = user.id;
 
-        jwt: async ({ token, user }) => {            
-            if (user) {
+                    if(user?.notifications)
+                        token.notifications = user.notifications;
 
-                token.id = user.id;
+                    if(user?.privaleges)
+                        token.privaleges = user.privaleges;
+                }
+        
+                return token
+            },
+            session: async ({ session, token }) => {
 
-                if(user?.notifications)
-                    token.notifications = user.notifications;
+                session.id = token.id;
 
-                if(user?.privaleges)
-                    token.privaleges = user.privaleges;
-            }
-    
-            return token
-        },
-        session: async ({ session, token }) => {
+                if(token?.notifications)
+                    session.user.notifications = token.notifications
 
-            session.id = token.id;
+                if(token?.privaleges)
+                    session.privaleges = token.privaleges;
 
-            if(token?.notifications)
-                session.user.notifications = token.notifications
-
-            if(token?.privaleges)
-                session.privaleges = token.privaleges;
-
-            return session
-        },
-        // jwt: ({ token, user }) => {
-        //     // first time jwt callback is run, user object is available
-        //     if (user) {
-        //       token.id = user.id;
-        //     }
-
-        //     return token;
-        //   },
-        //   session: ({ session, token }) => {
-        //     if (token) {
-        //       session.id = token.id;
-        //     }
-      
-        //     return session;
-        //   },
+                return session
+            },
         },
         secret: "INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw",
         pages: {
