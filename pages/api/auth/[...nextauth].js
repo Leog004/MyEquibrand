@@ -1,9 +1,19 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GitHubProvider from 'next-auth/providers/github'
+import { PrismaClient } from '.prisma/client';
+// import GitHubProvider from 'next-auth/providers/github'
 
+// const Cryptr = require('cryptr');
+const crypto = require("crypto");
+const algorithm = "des-ecb"; 
 
 export default NextAuth({
     providers: [
+        GitHubProvider({
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET
+          }),
         CredentialsProvider({
             name: 'your email',
             credentials: {
@@ -26,9 +36,9 @@ export default NextAuth({
 
                 //console.log("Encrypted: ", encrypted);
 
-                // const prisma = new PrismaClient();
-                // const rawSQL = `User_G_User_Login`;
-                // const result = await prisma.$queryRawUnsafe(`${rawSQL} @Email='${credentials.username}', @Password='${encrypted}'`)
+                const prisma = new PrismaClient();
+                const rawSQL = `User_G_User_Login`;
+                const result = await prisma.$queryRawUnsafe(`${rawSQL} @Email='${credentials.username}', @Password='${encrypted}'`)
 
                 // const cryptr = new Cryptr('myTotalySecretKey'); 
                 // const decryptedString = cryptr.encrypt(credentials.password);         
@@ -53,6 +63,8 @@ export default NextAuth({
                     return null;
                 }
             },
+
+        
         }),
     ],
     debug:true,
@@ -61,36 +73,53 @@ export default NextAuth({
 
     },
     callbacks: {
-            jwt: async ({ token, user }) => {            
-                if (user) {
 
-                    token.id = user.id;
+        jwt: async ({ token, user }) => {            
+            if (user) {
 
-                    if(user?.notifications)
-                        token.notifications = user.notifications;
+                token.id = user.id;
 
-                    if(user?.privaleges)
-                        token.privaleges = user.privaleges;
-                }
-        
-                return token
-            },
-            session: async ({ session, token }) => {
+                if(user?.notifications)
+                    token.notifications = user.notifications;
 
-                session.id = token.id;
+                if(user?.privaleges)
+                    token.privaleges = user.privaleges;
+            }
+    
+            return token
+        },
+        session: async ({ session, token }) => {
 
-                if(token?.notifications)
-                    session.user.notifications = token.notifications
+            session.id = token.id;
 
-                if(token?.privaleges)
-                    session.privaleges = token.privaleges;
+            if(token?.notifications)
+                session.user.notifications = token.notifications
 
-                return session
-            },
+            if(token?.privaleges)
+                session.privaleges = token.privaleges;
+
+            return session
+        },
+        // jwt: ({ token, user }) => {
+        //     // first time jwt callback is run, user object is available
+        //     if (user) {
+        //       token.id = user.id;
+        //     }
+
+        //     return token;
+        //   },
+        //   session: ({ session, token }) => {
+        //     if (token) {
+        //       session.id = token.id;
+        //     }
+      
+        //     return session;
+        //   },
         },
         secret: "INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw",
         pages: {
-            //signIn: '/auth/signIn',
+            signIn: '/auth/signin',
            // error: '/auth/error'
         }
 });
+
