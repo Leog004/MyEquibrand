@@ -83,6 +83,9 @@ export const getAdvertisementDetails = async (slug) => {
     const query = gql`
         query GetAdvertisementBySlug($slug: String!) {
             advertisement(where: {slug: $slug}) {
+            headerImage {
+                url
+            }
             brand {
                 id
                 image {

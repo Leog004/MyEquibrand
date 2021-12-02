@@ -2,6 +2,7 @@ import React from 'react'
 import { getAdvertisementDetails, GetAdvertisementsSlug } from '../../services';
 import {useRouter} from 'next/router'
 import { useSession } from "next-auth/react"
+import {HeaderBlock, FeaturedBrands} from '../../components/index'
 
 
 export default function blogDetails({advertisement}) {
@@ -28,9 +29,12 @@ export default function blogDetails({advertisement}) {
 
 
     return (
-        <div>
-            <h1>{advertisement.title}</h1>
-        </div>
+        <>
+            {/* Checking to see if the headerBlock has an image, if so we pass in the url, else we pass in an empty string  */}
+            <HeaderBlock title={advertisement.title} image={advertisement.headerImage ? advertisement.headerImage.url : ''} />
+            {/* getting featured brands */}
+            <FeaturedBrands/>
+        </>
     )
 }
 

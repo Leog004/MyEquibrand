@@ -1,5 +1,5 @@
 import React from 'react'
-import { AdvertisementNews, HeaderBlock } from '../../components'
+import { AdvertisementNews, HeaderBlock, FeaturedBrands } from '../../components'
 import { getSession } from 'next-auth/react';
 import { getAdvertisements } from '../../services';
 
@@ -7,7 +7,8 @@ import { getAdvertisements } from '../../services';
 export default function Advertisement({advertisement}) {
     return (
         <>
-            <HeaderBlock/>
+            <HeaderBlock title={'Advertisement'} />
+            <FeaturedBrands/>
             <AdvertisementNews data={advertisement} />
         </>
     )
