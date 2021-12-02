@@ -10,7 +10,7 @@ export default function blogDetails({advertisement}) {
     const router = useRouter()
 
     // Checking whether the user is logged in or not. 
-    const { status } = useSession({
+    const { data: session, status } = useSession({
         required: true,
         onUnauthenticated() {
           // The user is not authenticated, handle it here.
@@ -22,30 +22,33 @@ export default function blogDetails({advertisement}) {
     })
 
 
-    if(router.isFallback) {
+    // will showing loading on the screen if the user is not logged in or if the page is not found yet
+    if(router.isFallback || status === "loading" || !session) {
         return <h1>Loading...</h1>
     }
 
 
 
-    return (
-        <>
-            {/* Checking to see if the headerBlock has an image, if so we pass in the url, else we pass in an empty string  */}
-            <HeaderBlock title={advertisement.title} image={advertisement.headerImage ? advertisement.headerImage.url : ''} />
-            {/* getting featured brands */}
-            <FeaturedBrands/>
-        </>
-    )
+    if(session){
+        return (
+            <>
+                {/* Checking to see if the headerBlock has an image, if so we pass in the url, else we pass in an empty string  */}
+                <HeaderBlock title={advertisement.title} image={advertisement.headerImage ? advertisement.headerImage.url : ''} />
+                {/* getting featured brands */}
+                <FeaturedBrands/>
+            </>
+        )
+    }
 }
 
 
 // Fetch data at build time
 export async function getStaticProps ({params})
 {
-
+    // fetching data
     const adver = (await getAdvertisementDetails(params.slug));
     
-
+    // if not data is found, we will redirect to our advertisement main page
     if(!adver){
         return {
             redirect: {
@@ -68,7 +71,7 @@ export async function getStaticProps ({params})
 // The html is generated at build time and will be reused on each request
 export async function getStaticPaths(){
 
-
+    // getting our slugs statically
     const advertisements = await GetAdvertisementsSlug();
 
     return {
