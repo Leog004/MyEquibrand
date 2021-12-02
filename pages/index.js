@@ -1,8 +1,5 @@
-import Head from 'next/head'
-import { signIn, signOut, useSession} from 'next-auth/react'
-
-import { FeaturedBrands, FeaturedNew, FeaturedVideo, Features, Footer, Hero, Search } from '../components'
-import Header from '../components/Header'
+import { useSession} from 'next-auth/react'
+import { FeaturedBrands, FeaturedNew, FeaturedVideo, Features, Hero } from '../components'
 
 export default function Home() {
 

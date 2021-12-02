@@ -117,7 +117,7 @@ export default NextAuth({
         },
         secret: "INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw",
         pages: {
-            signIn: '/auth/signin',
+            signIn: '/auth/signIn',
            // error: '/auth/error'
         }
 });

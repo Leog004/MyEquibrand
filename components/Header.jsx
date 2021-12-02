@@ -4,13 +4,17 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSearch, faIdCard, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Search } from '.';
+import {useRouter} from 'next/router';
 
 export default function Header() {
 
-    const {data: session} = useSession();
+    const {data: session} = useSession(); // This grabs our session data. If the user is not logged in, then the session will be null
 
-    const [showSearch, setShowSearch] = useState(true);
+    const [showSearch, setShowSearch] = useState(true); // setting the state of whether the search bar should be showing or not
 
+    const router = useRouter() // using useRouter to get the pathname of the current page that we are on
+
+    // This function takes care of hiding or showing our searchBar
     const handleSearch = () => {
 
         if(showSearch) setShowSearch(false);
@@ -58,7 +62,7 @@ export default function Header() {
                     <nav className="flex mx-auto flex-wrap items-center text-sm md:ml-auto relative">
                         <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200"><span className='bg-red-500 absolute -top-5 -left-3 px-2 rounded-lg' style={{fontSize: '.5rem'}}>New</span>Products</a></Link>
                         
-                        <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Advertising</a></Link>
+                        <Link href='/Advertisement'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Advertising</a></Link>
                         <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Saddles</a></Link>
                         <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Ishare</a></Link>
                         {/* <Link href='#'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Price List</a></Link> */}
@@ -70,10 +74,12 @@ export default function Header() {
                 </div>
             )
         }
-        
-        <div className='mx-auto my-0 py-2 w-full justify-center flex' style={{backgroundColor: '#303030'}}>
-            <h3 className='text-sm uppercase'>New Leg boots are now available!</h3>
-        </div>
+        {
+            router.pathname === '/' &&
+                <div className='mx-auto my-0 py-2 w-full justify-center flex' style={{backgroundColor: '#303030'}}>
+                    <h3 className='text-sm uppercase'>New Leg boots are now available!</h3>
+                </div>
+        }
     </header>
     );
 }

@@ -3,7 +3,7 @@ import React from 'react'
 export default function FeaturedProduct() {
     return (
 
-  <div className="hidden sm:flex flex-col items-center justify-center absolute sm:bottom-0 sm:right-0 md:bottom-32 md:right-48 lg:bottom-60 h-sm w-50 mx-auto shadow-xl cursor-pointer animate-bounce-slow z-10">
+  <div className="hidden sm:flex flex-col items-center justify-center absolute sm:bottom-0 sm:right-0 md:bottom-32 md:right-48 lg:bottom-32 h-sm w-50 mx-auto shadow-xl cursor-pointer animate-bounce-slow z-10">
     <div className="container">
       <div className="max-w-md w-full shadow-lg rounded-xl p-6" style={{backgroundColor: '#202020'}}>
         <div className="flex flex-col ">
