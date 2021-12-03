@@ -1,7 +1,9 @@
 import React from 'react'
 import { FeaturedProduct } from '.';
 
-const HeaderImage = 'http://myequibrand.com/img/4818875210.jpg';
+//import HeaderImage from './../public/images/Header/Hero.webp'
+//const HeaderImage = 'http://myequibrand.com/img/4818875210.jpg';
+const HeaderImage = '/images/Header/Hero.webp';
 const LinearGradient = 'linear-gradient(90deg, #303030 0%, #c6770070 100%)'
 
 
