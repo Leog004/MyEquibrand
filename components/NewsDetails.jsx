@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function NewsDetails({details}) {
-    console.log(details);
     return (
             <ul class="mt-10">
             {

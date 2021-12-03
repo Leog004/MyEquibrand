@@ -12,7 +12,9 @@ export default function News({el}) {
                     <NewsDetails details={el.advertisementDetails} />
                 </div>
                 <div class="mt-10 -mx-4 md:-mx-12 relative lg:mt-0 lg:col-start-1">
-                    <img src={el.mainImage.url} alt="illustration" class="relative mx-auto shadow-lg rounded w-auto"/>
+                    <a href={el.mainImage.url} target='_blank'>
+                        <img src={el.mainImage.url} alt="illustration" class="relative mx-auto shadow-lg rounded w-auto"/>
+                    </a>
                 </div>
             </div>
             <div className='flex flex-col -mx-4 md:-mx-12 w-full mt-10 gap-y-5'>
