@@ -35,8 +35,6 @@ export default function blogDetails({advertisement}) {
                 <HeaderBlock title={advertisement.title} image={advertisement.headerImage ? advertisement.headerImage.url : ''} />
                 <Breadcrums pageBehind={'Advertisement'} current={advertisement.title} brand={advertisement.brand.image.url}/>
                 <News el={advertisement} />
-
-
                 {/* getting featured brands */}
                 <FeaturedBrands/>
             </>
