@@ -10,6 +10,7 @@ export {default as FeaturedVideo} from './FeaturedVideo'
 export {default as Search} from './Search'
 export {default as HeaderBlock} from './HeaderBlock'
 export {default as AdvertisementNews} from './AdvertisementNews'
+export {default as NewsDetails} from './NewsDetails'
 
 
 
