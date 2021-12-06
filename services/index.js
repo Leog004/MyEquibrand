@@ -99,6 +99,10 @@ export const getAdvertisementDetails = async (slug) => {
                 url
             }
             title
+                advertisementDetails {
+                    title
+                    description
+                }
             }
         }
     `;

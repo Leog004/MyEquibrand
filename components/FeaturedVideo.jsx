@@ -6,12 +6,12 @@ import ReactPlayer from 'react-player/youtube'
 export default function FeaturedVideo() {
     return (
         <div className='h-full max-w-5xl mx-auto'>
-            <div className='flex justify-between h-screen gap-x-6 py-20'>
-                <div className='w-4/5'>
+            <div className='flex justify-between h-full gap-x-6 py-20'>
+                <div className='w-4/5 h-lg'>
                     <ReactPlayer width='100%' height='100%' controls={true} playing={false} url='https://www.youtube.com/watch?v=4lMkurFS0zI' /> 
                 </div>
 
-                <div id='feature-video' className='flex flex-col w-1/5 gap-y-2 overflow-y-scroll'>
+                <div id='feature-video' className='flex h-lg flex-col w-1/5 gap-y-2 overflow-y-scroll'>
                     <ReactPlayer width='100%' height='200px' controls={true}  playing={false} url='https://www.youtube.com/watch?v=fli0nzjTfMw' /> 
                     
                     <ReactPlayer width='100%' height='200px' controls={true}  playing={false} url='https://www.youtube.com/watch?v=fli0nzjTfMw' /> 

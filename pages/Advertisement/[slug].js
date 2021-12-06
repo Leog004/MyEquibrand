@@ -3,7 +3,8 @@ import { getAdvertisementDetails, GetAdvertisementsSlug } from '../../services';
 import {useRouter} from 'next/router'
 import { useSession } from "next-auth/react"
 import {HeaderBlock, FeaturedBrands} from '../../components/index'
-
+import Breadcrums from '../../components/Breadcrums';
+import News from '../../components/News';
 
 export default function blogDetails({advertisement}) {
 
@@ -27,13 +28,13 @@ export default function blogDetails({advertisement}) {
         return <h1>Loading...</h1>
     }
 
-
-
     if(session){
         return (
             <>
                 {/* Checking to see if the headerBlock has an image, if so we pass in the url, else we pass in an empty string  */}
                 <HeaderBlock title={advertisement.title} image={advertisement.headerImage ? advertisement.headerImage.url : ''} />
+                <Breadcrums pageBehind={'Advertisement'} current={advertisement.title} brand={advertisement.brand.image.url}/>
+                <News el={advertisement} />
                 {/* getting featured brands */}
                 <FeaturedBrands/>
             </>
