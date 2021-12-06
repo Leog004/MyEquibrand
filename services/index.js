@@ -2,12 +2,12 @@ import {request, gql} from 'graphql-request'
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
-export const getAdvertisements = async () => {
+export const getNews = async () => {
 
     // Setting our query to get all of our advertisement content from graphcms
     const query = gql`
-    query GetAdvertisements {
-        advertisements(locales: en) {
+    query GetNews {
+        news(locales: en) {
           title
           description
           id
@@ -30,7 +30,7 @@ export const getAdvertisements = async () => {
 
     const result = await request(graphqlAPI, query); // get our response from api call
 
-    return result.advertisements; // return data
+    return result.news; // return data
 
 
 }
@@ -40,7 +40,7 @@ export const GetSearchData = async (search) => {
     const query = gql`
     
         query GetSearchData($search : String!) {
-            advertisementsConnection(
+            newsConnection(
             where: {title_contains: $search, OR: {brand: {title_contains: $search}}}
             ) {
             edges {
@@ -54,35 +54,35 @@ export const GetSearchData = async (search) => {
     `
 
     const result = await request(graphqlAPI, query, {search});
-    return result.advertisementsConnection.edges;
+    return result.newsConnection.edges;
 } 
 
-export const GetAdvertisementsSlug = async () => {
+export const GetNewsSlugs = async () => {
 
     const query = gql`
     
-        query AdvertisementSlugs {
-            advertisementsConnection {
-            edges {
-                node {
-                slug
+        query NewsSlugs {
+            newsConnection {
+                edges {
+                    node {
+                    slug
+                    }
                 }
-            }
             }
         }
        
     `
 
     const result = await request(graphqlAPI, query);
-    return result.advertisementsConnection.edges;
+    return result.newsConnection.edges;
 
 }
 
 
-export const getAdvertisementDetails = async (slug) => {
+export const getNewDetails = async (slug) => {
     const query = gql`
-        query GetAdvertisementBySlug($slug: String!) {
-            advertisement(where: {slug: $slug}) {
+        query GetNewBySlug($slug: String!) {
+            new(where: {slug: $slug}) {
             headerImage {
                 url
             }
@@ -109,5 +109,5 @@ export const getAdvertisementDetails = async (slug) => {
 
     const result = await request(graphqlAPI, query, {slug});
 
-    return result.advertisement;
+    return result.new;
 }

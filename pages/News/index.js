@@ -1,15 +1,15 @@
 import React from 'react'
 import { AdvertisementNews, HeaderBlock, FeaturedBrands } from '../../components'
 import { getSession } from 'next-auth/react';
-import { getAdvertisements } from '../../services';
+import { getAdvertisements, getNews } from '../../services';
 
 // getting our server side props passed through
-export default function Advertisement({advertisement}) {
+export default function Advertisement({news}) {
     return (
         <>
             <HeaderBlock title={'News'} />
             <FeaturedBrands/>
-            <AdvertisementNews data={advertisement} />
+            <AdvertisementNews data={news} />
         </>
     )
 }
@@ -33,10 +33,10 @@ export async function getServerSideProps(context) {
 
     try{
         // getting our advertisement data that is being called from service file
-        var advertisement = (await getAdvertisements()) || [];
+        var news = (await getNews()) || [];
 
         return {
-            props: { advertisement }, // return them to our front end as props
+            props: { news }, // return them to our front end as props
           };
 
     }catch(err){

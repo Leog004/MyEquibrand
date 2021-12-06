@@ -57,6 +57,8 @@ export default function PDFReader({outSideNumber}) {
           </div>
         </Document>
         
+            <a className='bg-purple-500 hover:bg-purple-600 px-4 py-1 text-white rounded-md mt-20' href='/assets/21EbMyEquibrand.pdf'>Download PDF</a>
+
       </div>
     )
 }
