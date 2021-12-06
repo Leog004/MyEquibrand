@@ -6,7 +6,7 @@ export default function Loader({isLoading}) {
 
     return (
         <div id='loader' className='flex flex-col justify-center items-center'>
-            <img src='https://react-pdf.org/images/logo.png' alt='loader'/>
+            <img src='http://www.myequibrand.com/img/MyEquibrand_Brand.png' alt='loader'/>
             <p>Loading...</p>
         </div>
     )

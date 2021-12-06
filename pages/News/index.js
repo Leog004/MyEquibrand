@@ -7,7 +7,7 @@ import { getAdvertisements } from '../../services';
 export default function Advertisement({advertisement}) {
     return (
         <>
-            <HeaderBlock title={'Advertisement'} />
+            <HeaderBlock title={'News'} />
             <FeaturedBrands/>
             <AdvertisementNews data={advertisement} />
         </>

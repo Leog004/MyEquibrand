@@ -25,7 +25,7 @@ export default function AdvertisementBlock({el}) {
                             <p className="mt-2 text-sm text-gray-500 md:text-base">{el.description}</p>
                             <div className="flex justify-center lg:justify-start mt-6">
                                 <a className="px-4 py-3 bg-gray-900 text-gray-200 text-xs font-semibold rounded hover:bg-gray-800" href="#">Contact Sales</a>
-                                <Link href={`/Advertisement/${el.slug}`}><a className="mx-4 px-4 py-3 bg-gray-300 text-gray-900 text-xs font-semibold rounded hover:bg-gray-400" href="#">Read More</a></Link>
+                                <Link href={`/News/${el.slug}`}><a className="mx-4 px-4 py-3 bg-gray-300 text-gray-900 text-xs font-semibold rounded hover:bg-gray-400" href="#">Read More</a></Link>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ export default function AdvertisementBlock({el}) {
                                 <p className="mt-2 text-sm text-gray-500 md:text-base">{el.description}</p>
                                 <div className="flex justify-center lg:justify-start mt-6">
                                     <a className="px-4 py-3 bg-gray-900 text-gray-200 text-xs font-semibold rounded hover:bg-gray-800" href="#">Get Started</a>
-                                    <Link href={`/Advertisement/${el.slug}`}><a className="mx-4 px-4 py-3 bg-gray-300 text-gray-900 text-xs font-semibold rounded hover:bg-gray-400" href="#">Learn More</a></Link>
+                                    <Link href={`/News/${el.slug}`}><a className="mx-4 px-4 py-3 bg-gray-300 text-gray-900 text-xs font-semibold rounded hover:bg-gray-400" href="#">Learn More</a></Link>
                                 </div>
                             </div>
                         </div>

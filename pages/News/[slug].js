@@ -33,7 +33,7 @@ export default function blogDetails({advertisement}) {
             <>
                 {/* Checking to see if the headerBlock has an image, if so we pass in the url, else we pass in an empty string  */}
                 <HeaderBlock title={advertisement.title} image={advertisement.headerImage ? advertisement.headerImage.url : ''} />
-                <Breadcrums pageBehind={'Advertisement'} current={advertisement.title} brand={advertisement.brand.image.url}/>
+                <Breadcrums pageBehind={'News'} current={advertisement.title} brand={advertisement.brand.image.url}/>
                 <News el={advertisement} />
                 {/* getting featured brands */}
                 <FeaturedBrands/>
@@ -53,7 +53,7 @@ export async function getStaticProps ({params})
     if(!adver){
         return {
             redirect: {
-                destination: '/Advertisement',
+                destination: '/News',
                 permanent: false
             }      
         }
