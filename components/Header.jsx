@@ -66,7 +66,7 @@ export default function Header() {
                         {/* <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Saddles</a></Link> */}
                         <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Ishare</a></Link>
                         {/* <Link href='#'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Price List</a></Link> */}
-                        <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Catelog</a></Link>
+                        <Link href='/Catelog'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Catelog</a></Link>
                         {/* <Link href='#'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Clearence</a></Link> */}
                         {/* <Link href='#'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Resources</a></Link> */}
 

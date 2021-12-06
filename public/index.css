@@ -18,3 +18,34 @@
   #feature-video::-webkit-scrollbar-thumb:hover {
     background: #b30000; 
   }
+
+
+  #loader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.react-pdf__Page__canvas{
+    width: 480px !important;
+    height: 100% !important;
+}
+
+.react-pdf__Page__textContent{
+    width: 480px !important;
+    height: 100% !important;
+}
+
+.react-pdf__Page__svg{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.react-pdf__Page__svg svg {
+  display: block;
+  vertical-align: middle;
+  width: 100%;
+  height: auto;
+}
