@@ -14,9 +14,14 @@ export {default as ControlPanel} from './Catelog/ControlPanel'
 export {default as Loader} from './Catelog/Loader'
 export {default as PDFReader} from './Catelog/PDFReader'
 export {default as SideBar} from './Catelog/SideBar'
-
-
 export {default as NewsDetails} from './News/NewsDetails'
+export {default as PopItem} from './Advertisement/Pop/PopItem'
+export {default as PopControl} from './Advertisement/Pop/PopControl'
+
+export {default as AdvertisementControl} from './Advertisement/AdvertisementControl'
+export {default as Advertisement} from './Advertisement/Advertisement'
+
+
 
 
 
