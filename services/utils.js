@@ -40,4 +40,29 @@ export const dycryptPassword = (pass) => {
     // console.log("Decrypted: ", decrypted);
 
     return decrypted;
+    
+}
+
+
+export const validBrands = (arr) => {
+
+    let tempArray = [];
+
+    arr.forEach((brand) => {
+
+        if(brand === 'Classic Rope') tempArray.push(brand);
+
+        if(brand === 'Classic Equine') tempArray.push(brand);
+
+        if(brand === 'Rattler Rope') tempArray.push(brand);
+
+        if(brand === 'Martin Strap') tempArray.push(brand.replace('Strap', 'Saddlery'));
+
+        if(brand === 'Cashel') tempArray.push(brand);
+
+    })
+
+
+    return tempArray;
+
 }

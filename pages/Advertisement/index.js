@@ -1,13 +1,17 @@
 import React from 'react'
 import { HeaderBlock, Advertisement } from '../../components'
-import { getNews } from '../../services'
+import { getAdvertisementPop, getNews } from '../../services'
 import { getSession } from 'next-auth/react'
+import { validBrands } from '../../services/utils'
 
-export default function index({news, session}) {
+export default function index({pops, brands}) {
     return (
         <>
-           <HeaderBlock title={"Advertisement"} />
-           <Advertisement />
+           <HeaderBlock 
+                title={"Advertisement"} 
+                description={'This is your source for available Point-Of-Purchase signage, banners and merchandising tools. Everything you need to enhance your merchandising displays is here, ready to attract customers and increase sales.'}        
+            />
+           <Advertisement pops={pops} brands={brands} />
         </>
     )
 }
@@ -34,28 +38,22 @@ export async function getServerSideProps(context) {
 
     try{
         // getting our advertisement data that is being called from service file
-        var news = (await getNews()) || [];
-
+        var pops = (await getAdvertisementPop()) || [];
         
-        if(session){
-           
+        if(session){           
             session.state.map((el) => {
-                brands.push(el.Type);
+                brands.push(el.Privilege);
             })
 
-            
-            brands.map((brand) => {
-                news = news.filter((el) => {
-                    console.log(el.brand.title.toString().substr(el.brand.title.indexOf(' ') + 1));
-                    return el.brand.title.toString().substr(0,el.brand.title.indexOf(' ') + 1).toUpperCase() === brand
-                })
-            })
+            brands = validBrands(brands);
 
-            console.log(brands, news);
+            pops = pops.filter((el) => {
+               return brands.includes(el.brand.title)
+            })
         }
     
         return {
-            props: { news, session }, // return them to our front end as props
+            props: { pops, brands }, // return them to our front end as props
           };
 
     }catch(err){

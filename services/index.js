@@ -111,3 +111,30 @@ export const getNewDetails = async (slug) => {
 
     return result.new;
 }
+
+
+export const getAdvertisementPop = async () => {
+    
+    const query = gql`
+        query AdvertisementPops {
+            advertisementPops {
+            brand {
+                title
+            }
+            popType
+            image {
+                id
+                url
+                fileName
+            }
+            price
+            sku
+            title
+            description
+            }
+      }      
+    `;
+
+    const result = await request(graphqlAPI, query);
+    return result.advertisementPops;
+}
