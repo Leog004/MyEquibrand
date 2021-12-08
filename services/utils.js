@@ -50,15 +50,15 @@ export const validBrands = (arr) => {
 
     arr.forEach((brand) => {
 
-        if(brand === 'Classic Rope') tempArray.push(brand);
+        if(brand === 'Classic Rope') tempArray.push({"brand": brand, "show": true});
 
-        if(brand === 'Classic Equine') tempArray.push(brand);
+        if(brand === 'Classic Equine') tempArray.push({"brand": brand, "show": true});
 
-        if(brand === 'Rattler Rope') tempArray.push(brand);
+        if(brand === 'Rattler Rope') tempArray.push({"brand": brand, "show": true});
 
-        if(brand === 'Martin Strap') tempArray.push(brand.replace('Strap', 'Saddlery'));
+        if(brand === 'Martin Strap') tempArray.push({"brand": brand.replace('Strap', 'Saddlery'), "show": true});
 
-        if(brand === 'Cashel') tempArray.push(brand);
+        if(brand === 'Cashel') tempArray.push({"brand": brand, "show": true});
 
     })
 
