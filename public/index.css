@@ -68,7 +68,7 @@
 
 .react-pdf__Page__svg svg {
   display: block;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   width: 100%;
   height: auto;
 }

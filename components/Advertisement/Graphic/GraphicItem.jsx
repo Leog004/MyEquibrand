@@ -24,6 +24,6 @@ export default function GraphicItem({asset, image}) {
     }
 
     return (
-            <img onClick={handleImageClick} className='w-full max-h-60 h-full cursor-pointer active:scale-x-125 transform transition-all' src={mainImage || image} />
+            <img onClick={handleImageClick} className='w-full max-h-80 md:max-h-64 h-full cursor-pointer active:scale-x-125 transform transition-all' src={mainImage || image} />
     )
 }

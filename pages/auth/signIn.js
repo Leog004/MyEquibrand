@@ -22,7 +22,7 @@ export default function SignIn({ csrfToken, error }) {
     <h1 className='w-full text-center text-gray-700 font-semibold text-3xl leading-10 my-2 capitalize'>Login</h1>
     <p className='w-full text-center text-md text-gray-500 mb-0'>Welcome Back!</p>
 
-    <form className='w-1/3 my-0 mx-auto grid grid-cols-1 gap-5 justify-between' method="post" action="/api/auth/callback/credentials">
+    <form className='w-full md:w-1/2 lg:w-1/3 my-0 mx-auto grid grid-cols-1 gap-5 justify-between' method="post" action="/api/auth/callback/credentials">
       <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
       <div className='flex flex-col w-full'>

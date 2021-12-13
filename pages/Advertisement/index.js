@@ -72,7 +72,7 @@ export default function index({pops, brands, graphics}) {
                                 <div className='flex'>
                                     <h1 className='text-5xl font-semibold py-10'>{el.brand}</h1>
                                 </div>
-                                <div className='grid grid-cols-2 md:grid-cols-4 gap-x-20 gap-y-20 w-full h-full'>
+                                <div className='grid grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-10 md:gap-x-20 md:gap-y-20 w-full h-full'>
                                     {
                                         pops.map((pop) => (
                                             el.brand === pop.brand.title &&
