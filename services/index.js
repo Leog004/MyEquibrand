@@ -138,3 +138,27 @@ export const getAdvertisementPop = async () => {
     const result = await request(graphqlAPI, query);
     return result.advertisementPops;
 }
+
+
+export const getAdvertisementGraphic = async () => {
+    
+    const query = gql`
+        query AdvertisementGraphic {
+            advertisementGraphics {
+            brand {
+                title
+            }
+            graphicAsset {
+                id
+                url
+                fileName
+                mimeType
+            }
+            graphicName
+            }
+      }      
+    `;
+
+    const result = await request(graphqlAPI, query);
+    return result.advertisementGraphics;
+}

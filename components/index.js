@@ -16,6 +16,8 @@ export {default as PDFReader} from './Catelog/PDFReader'
 export {default as SideBar} from './Catelog/SideBar'
 export {default as NewsDetails} from './News/NewsDetails'
 export {default as PopItem} from './Advertisement/Pop/PopItem'
+export {default as GraphicItem} from './Advertisement/Graphic/GraphicItem'
+
 
 
 

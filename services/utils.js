@@ -1,21 +1,23 @@
+import { PrismaClient } from '.prisma/client';
+const prisma = new PrismaClient();
+
+
 
 export const encryptPassword = (pass) => {
-
 
     // const Cryptr = require('cryptr');
     const crypto = require("crypto");
 
-    const algorithm = "des-ecb"; 
-
+    const algorithm = process.env.UTIL_ALGORITHM; 
 
     const password = pass;
 
     // use a hex key here
-    const key = Buffer.from("d0e276d0144890d3", "hex");
+    const key = Buffer.from(process.env.UTIL_BUFFER, process.env.UTIL_TYPE);
 
     const cipher = crypto.createCipheriv(algorithm, key, null);
 
-    let encrypted = cipher.update(password, 'utf8', 'hex');
+    let encrypted = cipher.update(password, 'utf8', process.env.UTIL_TYPE);
 
     encrypted += cipher.final('hex');
 
@@ -27,20 +29,57 @@ export const dycryptPassword = (pass) => {
 
      const crypto = require("crypto");
 
-     const algorithm = "des-ecb"; 
+     const algorithm = process.env.UTIL_ALGORITHM; 
 
-     const key = Buffer.from("d0e276d0144890d3", "hex");
+     const key = Buffer.from(process.env.UTIL_BUFFER, process.env.UTIL_TYPE);
 
      const decipher = crypto.createDecipheriv(algorithm, key, null);
 
-     let decrypted = decipher.update(pass, 'hex', 'utf8');
+     let decrypted = decipher.update(pass, process.env.UTIL_TYPE, 'utf8');
 
      decrypted += decipher.final('utf8');
     
-    // console.log("Decrypted: ", decrypted);
-
     return decrypted;
     
+}
+
+
+
+export const GetUser = async (email, pass) => {
+
+    const encryptedPassword = encryptPassword(pass);
+
+    const rawSQL = `_G_Login`;
+    const result = await prisma.$queryRawUnsafe(`${rawSQL} @Email='${email}', @Password='${encryptedPassword}'`)
+
+    if(result.length > 0){
+
+        let state = [];
+
+        for(let x = 0; x < result.length; x++){
+
+            let obj = {
+                'Privilege' : result[x]['Privilege'],
+                'PrivilegeID' : result[x]['PrivilegeID'],
+                'PrivilegeType' : result[x]['PrivilegeType'],
+                'LoginPrivilege' : result[x]['LoginPrivilege'],
+                'Type' : result[x]['Type']
+            }
+
+            state.push(obj);
+        }
+
+        return {
+            id: result[0]['UserID'],         
+            name: result[0]['Name'],
+            email: result[0]['Email'],
+            state
+        };
+        
+    }else{
+        return null;
+    }
+
 }
 
 
