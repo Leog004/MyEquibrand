@@ -68,7 +68,7 @@ export default function index({pops, brands, graphics}) {
                     pop &&
                         brands.map((el) => (
                             el.show &&
-                            <div className={'flex flex-col border-b-2 pb-10 hover:shadow-md hover:bg-gray-50 px-10'}>
+                            <div className={'flex flex-col border-b-2 pb-10 px-10'}>
                                 <div className='flex'>
                                     <h1 className='text-5xl font-semibold py-10'>{el.brand}</h1>
                                 </div>
@@ -79,14 +79,12 @@ export default function index({pops, brands, graphics}) {
                                             <PopItem key={pop.description} image={pop.image.url} title={pop.title} description={pop.description} price={pop.price} />
                                         ))
                                     }
-                                </div>
-
-                                
+                                </div>                                
                                 {
     
                                     <div className='w-full overflow-hidden mt-20 bg-gray-200 pt-2 rounded-lg'>
                                         <h2 className='pl-10 pt-2 pb-2 font-semibold uppercase text-gray-700 w-full border-b-2 border-gray-300'>Graphics <span className='text-red-400 text-xs'>(Click image to download)</span></h2>
-                                        <div className='flex justify-between items-center w-full overflow-x-scroll gap-x-24 overflow-hidden'>
+                                        <div className='flex justify-between items-center w-full overflow-x-scroll gap-x-24 overflow-hidden graphic_scroll'>
                                                 {
                                                     graphics.map((graph) => (
                                                         el.brand === graph.brand.title &&
@@ -104,7 +102,7 @@ export default function index({pops, brands, graphics}) {
                     graphic && 
                          brands.map((el) => (
                              el.show && 
-                             <div className={'w-full mx-auto my-0'}>
+                             <div key={el.brand} className={'w-full mx-auto my-0'}>
                                     {/* <h1 className='text-5xl font-semibold py-10'>{el.brand}</h1> */}
                             
                                 <div className='w-full overflow-hidden'>
