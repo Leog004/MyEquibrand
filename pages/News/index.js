@@ -1,7 +1,7 @@
 import React from 'react'
 import { AdvertisementNews, HeaderBlock, FeaturedBrands } from '../../components'
 import { getSession } from 'next-auth/react';
-import { getAdvertisements, getNews } from '../../services';
+import {getNews } from '../../services';
 
 // getting our server side props passed through
 export default function Advertisement({news}) {
