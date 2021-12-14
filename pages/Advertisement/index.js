@@ -88,7 +88,7 @@ export default function index({pops, brands, graphics}) {
                                                 {
                                                     graphics.map((graph) => (
                                                         el.brand === graph.brand.title &&
-                                                        <GraphicItem key={graph.title} asset={graph.graphicAsset} image={graph.graphicAsset[0].url} />
+                                                        <GraphicItem key={graph.GraphicName} asset={graph.graphicAsset} image={graph.graphicAsset[0].url} />
                                                     ))
                                                 }
                                         </div>

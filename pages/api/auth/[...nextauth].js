@@ -1,14 +1,9 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GitHubProvider from 'next-auth/providers/github'
 import {GetUser} from '../../../services/utils'
 
 export default NextAuth({
     providers: [
-        GitHubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET
-          }),
         CredentialsProvider({
             name: 'your email',
             credentials: {
