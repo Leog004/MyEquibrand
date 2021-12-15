@@ -172,7 +172,7 @@ export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
     try {
         const query = gql`
             query GetProductsBy_Filter_Active_Brand($brand: String!) {
-                    products(where: {isActive: true, filter_contains_some:` + filter +`, brand: {title: $brand}}) {
+                    products(where: {isActive: true, filter_contains_some:` + filter.replace(' ', '_')  +`, brand: {title: $brand}}) {
                     id
                     price
                     title
