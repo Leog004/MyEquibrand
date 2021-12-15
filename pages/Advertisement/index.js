@@ -3,6 +3,7 @@ import { GraphicItem, HeaderBlock, PopItem } from '../../components'
 import { getAdvertisementGraphic, getAdvertisementPop, getNews } from '../../services'
 import { getSession } from 'next-auth/react'
 import { validBrands } from '../../services/utils'
+import Head from 'next/head'
 
 export default function index({pops, brands, graphics}) {
 
@@ -28,6 +29,14 @@ export default function index({pops, brands, graphics}) {
 
     return (
         <>
+            <Head>
+               {/* Title */}
+               <title>MyEquibrand Advertisement</title>
+                {/* Meta Tag */}
+                <meta name="description" content="In myequibrand advertisement page" key='description' />
+                <meta name="keywords" content="Classic Equine, Classic Rope, MyEquibrand, Rattler Rope, Cashel" key='keyWords' />
+            </Head>
+
            <HeaderBlock 
                 title={"Advertisement"} 
                 description={'This is your source for available Point-Of-Purchase signage, banners and merchandising tools. Everything you need to enhance your merchandising displays is here, ready to attract customers and increase sales.'}        
