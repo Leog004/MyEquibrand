@@ -227,6 +227,9 @@ export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
                     description {
                         raw
                     }
+                    images {
+                        url
+                    }
                 }
             }
         `;
@@ -243,4 +246,54 @@ export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
     }
 
 
+}
+
+
+export const GetProductSlugs = async () => {
+
+    const query = gql`
+    
+        query ProductsSlugs {
+            productsConnection {
+                edges {
+                    node {
+                    slug
+                    }
+                }
+            }
+        }
+       
+    `
+
+    const result = await request(graphqlAPI, query);
+    return result.productsConnection.edges;
+
+}
+
+
+export const getProductDetails = async (slug) => {
+    const query = gql`
+        query GetNewBySlug($slug: String!) {
+            product(where: {slug: $slug}){
+                title
+                price
+                brand{
+                  title
+                  image {
+                    url
+                  }
+                }
+                description{
+                  raw
+                }
+                mainImage{
+                  url
+                }
+              }
+            }
+        `;
+
+    const result = await request(graphqlAPI, query, {slug});
+
+    return result.product;
 }

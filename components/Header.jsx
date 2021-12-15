@@ -49,10 +49,14 @@ export default function Header() {
          <Link href='/'>
             <img src="http://www.myequibrand.com/img/MyEquibrand_Brand_White.png" style={{ height: '24px', marginTop: '10px', marginBottom: '10px'}} alt="logo" />
          </Link>
+         
          <div className='flex items-center border-gray-800 px-4 py-2 border-l border-r m-0'>
+
+         </div>
+         {/* <div className='flex items-center border-gray-800 px-4 py-2 border-l border-r m-0'>
             <Link href='#'><a onClick={handleSearch} className='cursor-pointer uppercase font-semibold text-xs'> <FontAwesomeIcon className='mr-2' icon={faSearch}/> Search</a></Link>
             <Search hidden={showSearch} handleSearch={handleSearch}/>
-        </div>
+        </div> */}
          
 
         </div>
