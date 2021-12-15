@@ -177,6 +177,7 @@ export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
                     price
                     title
                     filter
+                    slug
                     brand {
                         title
                         image {

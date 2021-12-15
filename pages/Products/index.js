@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { getSession } from 'next-auth/react'
 import { validBrands } from '../../services/utils';
 import { getProductsBy_Filter_Active_Brand } from '../../services';
+import Image from 'next/image'
+import Link from 'next/link'
 
 
 export default function index({brands}) {
@@ -65,7 +67,7 @@ export default function index({brands}) {
     }, [selectedCategory]);
 
     return (
-    <section className="bg-white dark:bg-gray-900 p-20">
+    <section className="bg-white dark:bg-gray-900 sm:p-10 md:p-20 ">
         <div className="container px-6 py-8 mx-auto">
             <div className="lg:flex lg:-mx-2">
                 <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
@@ -90,12 +92,16 @@ export default function index({brands}) {
                         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {
                                 products.length > 0 && products.map((el) => (
-                                    <div key={el.title} className="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-                                        <img className="object-contain w-full rounded-md h-72 xl:h-80" src={el.mainImage.url} alt="T-Shirt" />
+                                    <div key={el.title} className="flex flex-col items-center justify-center w-full max-w-lg mx-auto pb-10 border-b-2 border-gray-200 sm:border-none sm:p-0">
+                                        <div className='object-contain w-full rounded-md h-72 xl:h-80 relative cursor-pointer hover:scale-125 transform transition-all ease-out duration-300'>
+                                            <Image blurDataURL={el.mainImage.url} placeholder={'blur'} objectFit={'contain'} layout={'fill'} src={el.mainImage.url} alt={el.title} />
+                                        </div>
                                         <h4 className="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200 text-center capitalize">{el.title.toLowerCase()}</h4>
                                         <p className="text-blue-500">${el.price}</p>
                                         <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                            <span className="mx-1">View More</span>
+                                            <Link href={{pathname: '/Products/[slug]', query: {slug: encodeURIComponent(el.slug)}}}> 
+                                                <span className="mx-1">View More</span>
+                                            </Link>
                                         </button>
                                     </div>
                                 ))
