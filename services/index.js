@@ -169,10 +169,48 @@ export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
 
     if(!filter) filter = 'All';
 
+    console.log(filter, brand);
     try {
+
+        if(brand !== 'All') {
+            const query = gql`
+                query GetProductsBy_Filter_Active_Brand($brand: String!) {
+                        products(where: {isActive: true, filter_contains_some:` + filter.replace(' ', '_')  +`, brand: {title: $brand}}) {
+                        id
+                        price
+                        title
+                        filter
+                        slug
+                        brand {
+                            title
+                            image {
+                            url
+                            }
+                        }
+                        mainImage {
+                            url
+                        }
+                        description {
+                            raw
+                        }
+                    }
+                }
+            `;
+
+            const variables = {
+                filter,
+                brand
+            }
+    
+            const result = await request(graphqlAPI, query, variables);
+    
+            return result.products;
+        }
+
+
         const query = gql`
-            query GetProductsBy_Filter_Active_Brand($brand: String!) {
-                    products(where: {isActive: true, filter_contains_some:` + filter.replace(' ', '_')  +`, brand: {title: $brand}}) {
+        query GetProductsBy_Filter_Active_Brand() {
+                    products(where: {isActive: true, filter_contains_some:` + filter.replace(' ', '_')  +`}) {
                     id
                     price
                     title
@@ -194,14 +232,12 @@ export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
             }
         `;
 
-        const variables = {
-            filter,
-            brand
-        }
 
-        const result = await request(graphqlAPI, query, variables);
+        const result = await request(graphqlAPI, query);
 
         return result.products;
+
+
 
     }catch(error){
         console.log(error);

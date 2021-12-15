@@ -30,6 +30,8 @@ export default function index({brands}) {
                         
             //uniqueCategories = [...new Set(products.map((el) => el.filter))]; // looping through our products array and getting our filter value. If it is new, then we add inyto the array || OLD CODE
             
+            console.log(uniqueCategories);
+
             if(uniqueCategories.length > 1){ // if the filter temp array is greater than 1 proceed
 
                 if(!uniqueCategories.includes(selectedCategory)) setselectedCategory('All') // we are checking if the current products have the same category as the previous brand if not then we will default to All
@@ -46,6 +48,8 @@ export default function index({brands}) {
     // Here we are getting the user available brands that they can choose from. We are rending it into our select field as <options></options>
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
+    console.log(brands);
+
     const [selectedCategory, setselectedCategory] = useState('All'); // this will carry the state of our category
     const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : ''); // this will carry the state of our brand
     const [products, setProducts] = useState([]); // this will carry the state of the products that will be showing
@@ -54,7 +58,7 @@ export default function index({brands}) {
 
     // This will be called in the beginning when the components mounts or when selectedBrand state value has changed
     useEffect(() => {
-        getProductsBy_Filter_Active_Brand('All', selectedBrand).then((result) => {
+        getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => {
             setProducts(result)
             initCategories(result);
         });
@@ -131,6 +135,7 @@ export async function getServerSideProps(context) {
             })
 
             brands = validBrands(brands); // this will go through the brand array and return distinct valid brands that the user can view
+            brands.unshift({brand: 'All', show: true});
         }
 
         return {
