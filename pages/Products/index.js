@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { getSession } from 'next-auth/react'
 import { validBrands } from '../../services/utils';
+import { HeaderBlock} from '../../components/index'
 import { getProductsBy_Filter_Active_Brand } from '../../services';
 import Image from 'next/image'
 import Link from 'next/link'
-
 
 export default function index({brands}) {
 
@@ -30,38 +30,38 @@ export default function index({brands}) {
                         
             //uniqueCategories = [...new Set(products.map((el) => el.filter))]; // looping through our products array and getting our filter value. If it is new, then we add inyto the array || OLD CODE
             
-            console.log(uniqueCategories);
 
             if(uniqueCategories.length > 1){ // if the filter temp array is greater than 1 proceed
 
                 if(!uniqueCategories.includes(selectedCategory)) setselectedCategory('All') // we are checking if the current products have the same category as the previous brand if not then we will default to All
-
                 //uniqueCategories = uniqueCategories[uniqueCategories.length - 1]; // getting the last array of our temp categories which are all unique || OLD CODE
             }
             
-         }
-         
+         }else setselectedCategory('All');
+
          setCategories(uniqueCategories.length > 1 ? uniqueCategories : ['All']) // changing the state value of our Categories, if uniqueCategories is empty, then categories_('All') will take over
+         return selectedCategory;
     }
 
 
     // Here we are getting the user available brands that they can choose from. We are rending it into our select field as <options></options>
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
-    console.log(brands);
+    // console.log(brands);
 
     const [selectedCategory, setselectedCategory] = useState('All'); // this will carry the state of our category
     const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : ''); // this will carry the state of our brand
     const [products, setProducts] = useState([]); // this will carry the state of the products that will be showing
     const [categories, setCategories] = useState([]); // This will cary the state of our categories that will be shown on the left side
 
-
     // This will be called in the beginning when the components mounts or when selectedBrand state value has changed
-    useEffect(() => {
-        getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => {
-            setProducts(result)
+    useEffect(async () => {
+        
+        getProductsBy_Filter_Active_Brand('All', selectedBrand).then((result) => {
             initCategories(result);
-        });
+            //setProducts(result);
+        })
+        return await getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => setProducts(result));
     }, [selectedBrand]);
 
 
@@ -71,19 +71,22 @@ export default function index({brands}) {
     }, [selectedCategory]);
 
     return (
+    <>
+    <HeaderBlock title={'New Products'} />
+    
     <section className="bg-white dark:bg-gray-900 sm:p-10 md:p-20 ">
         <div className="container px-6 py-8 mx-auto">
             <div className="lg:flex lg:-mx-2">
-                <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
+                <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4 md:sticky md:top-20 md:h-full">
                     {
                         categories.length > 0 && categories.map((el) => (
-                            <a key={el} onClick={handleCategoryChange} id={el} href="#" className={`block font-medium ${el === selectedCategory ? 'text-blue-600 dark:text-blue-500' : 'text-gray-500 dark:text-gray-300'} hover:underline`}>{el}</a>
+                            <a key={el} onClick={handleCategoryChange} id={el} href="#!" className={`block font-medium ${el === selectedCategory ? 'text-blue-600 dark:text-blue-500' : 'text-gray-500 dark:text-gray-300'} hover:underline`}>{el}</a>
                         ))
                     }
                 </div>
 
                 <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5 ">
-                        <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
+                        <div className="flex items-center justify-between text-sm tracking-widest uppercase">
                             <p className="text-gray-500 dark:text-gray-300">{products.length > 0 ? `${products.length} Items` : '0 Items' }</p>
                             <div className="flex items-center">
                                 <p className="text-gray-500 dark:text-gray-300">Brand</p>
@@ -115,6 +118,7 @@ export default function index({brands}) {
                 </div>
             </div>
     </section>
+    </>
     )
 }
 

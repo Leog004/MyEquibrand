@@ -1,9 +1,11 @@
 import React from 'react'
+import { Breadcrums, HeaderBlock, } from '../../components'
 
-export default function Slug() {
+export default function Slug({props}) {
     return (
-        <div>
-            <h1>Hello from slug</h1>
-        </div>
+        <>
+           <HeaderBlock />
+           <Breadcrums pageBehind='Products' current='Slug Page' />
+        </>
     )
 }

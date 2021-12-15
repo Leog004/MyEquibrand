@@ -168,8 +168,7 @@ export const getAdvertisementGraphic = async () => {
 export const getProductsBy_Filter_Active_Brand = async (filter, brand) => {
 
     if(!filter) filter = 'All';
-
-    console.log(filter, brand);
+    
     try {
 
         if(brand !== 'All') {
