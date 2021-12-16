@@ -16,6 +16,7 @@ export default function index({brands}) {
 
     const handleCategoryChange = (e) => {
         setselectedCategory(e.target.id); // Changing the value of our select brand state by getting the value of our <a [id] ></a>
+        window.localStorage.setItem('selectedCategory', e.target.id);
     }
 
     const initCategories = (products) => {
@@ -56,21 +57,21 @@ export default function index({brands}) {
     const [products, setProducts] = useState([]); // this will carry the state of the products that will be showing
     const [categories, setCategories] = useState([]); // This will cary the state of our categories that will be shown on the left side
 
-    // This will be called in the beginning when the components mounts or when selectedBrand state value has changed
+    // This will be called in the beginning when the components mounts
+    useEffect(() => {
+        if(window.localStorage.getItem('selectedCategory')){
+           return setselectedCategory(() => window.localStorage.getItem('selectedCategory'));
+        }
+    }, [])
+
+    // This will be called in the beginning when the components mounts or when selectedBrand, or selectedCategory state value has changed
     useEffect(async () => {
-        
+
         getProductsBy_Filter_Active_Brand('All', selectedBrand).then((result) => {
             initCategories(result);
-            //setProducts(result);
         })
-        return await getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => setProducts(result));
-    }, [selectedBrand]);
-
-
-    // This will be called in the beginning when the components mounts or when selectedCategory state value has changed
-    useEffect(() => {
-        getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => setProducts(result));
-    }, [selectedCategory]);
+        await getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => setProducts(result));
+    }, [selectedBrand, selectedCategory]);
 
     return (
     <>
@@ -78,8 +79,8 @@ export default function index({brands}) {
     
     <section className="bg-white dark:bg-gray-900 sm:p-10 md:p-20 ">
         <div className="container px-6 py-8 mx-auto">
-            <div className="lg:flex lg:-mx-2">
-                <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4 md:sticky md:top-20 md:h-full">
+            <div className="lg:flex lg:-mx-2 h-full">
+                <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4 md:sticky md:top-0 md:h-full bg-gray-50 px-10 py-40">
                     {
                         categories.length > 0 && categories.map((el) => (
                             <a key={el} onClick={handleCategoryChange} id={el} href="#!" className={`block font-medium ${el === selectedCategory ? 'text-blue-600 dark:text-blue-500' : 'text-gray-500 dark:text-gray-300'} hover:underline`}>{el}</a>
