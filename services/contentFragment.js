@@ -30,7 +30,7 @@ export const getContentFragment = (index, text, obj, type) => {
         case 'heading-three':
             return <h3 key={index} className="text-gray-700 font-semibold text-lg mt-10 mb-0">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h3>;
         case 'paragraph':
-         return <p key={index} className="text-sm text-gray-600 leading-9 text-justify first-of-type:mt-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</p>;
+         return <p key={index} className="text-sm text-gray-600 leading-9 text-justify isFirst" style={{lineHeight: '2.25rem'}}>{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</p>;
         case 'heading-four':
             return <h4 key={index} className="text-md font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h4>;
         case 'numbered-list':

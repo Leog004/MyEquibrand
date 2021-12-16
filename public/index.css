@@ -21,7 +21,7 @@
 
 
 .graphic_scroll::-webkit-scrollbar{
-  height: 12px;
+  height: 18px;
   overflow: hidden;
 }
 
@@ -71,4 +71,9 @@
   /* vertical-align: middle; */
   width: 100%;
   height: auto;
+}
+
+
+.isFirst:first-of-type {
+  margin-top: 2rem !important;
 }
