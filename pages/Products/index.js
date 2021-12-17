@@ -11,13 +11,13 @@ export default function index({brands}) {
 
     const handleBrandChange = (e) => {
         setSelectedBrand(e.target.value); // Changing the value of our select brand state by getting the value of our <option value>
-        setLocalDataWithExpiry('selectedBrand', e.target.value, 12000);
+        setLocalDataWithExpiry('selectedBrand', e.target.value, 30000);
 
     }
 
     const handleCategoryChange = (e) => {
         setselectedCategory(e.target.id); // Changing the value of our select brand state by getting the value of our <a [id] ></a>
-        setLocalDataWithExpiry('selectedCategory', e.target.id, 12000);
+        setLocalDataWithExpiry('selectedCategory', e.target.id, 30000);
     }
 
     const initCategories = (products) => {

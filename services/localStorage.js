@@ -1,3 +1,15 @@
+/*
+    Leo Garza
+    MyEquibrand 12-13-21
+
+    *Goal - Permit the user to interact with persistent data.
+     Example: When they return to a page, if they had selected filters. Those filters will remain in place.    
+
+*/
+
+
+// setting a local storage item with an expiration date.
+// Can recieve three parameters, key[name], value, and time for the expiration
 export const setLocalDataWithExpiry = (key, value, ttl) => {
     const now = new Date();
 
@@ -9,6 +21,8 @@ export const setLocalDataWithExpiry = (key, value, ttl) => {
     window.localStorage.setItem(key, JSON.stringify(item));
 }
 
+// This retrieves the local storage data by the key[name] it recieves. 
+// If it is not expired it will return value, otherwise it will return null
 export const getLocalDataWithExpiry = (key) => {
     const itemStr = localStorage.getItem(key);
 
@@ -27,6 +41,7 @@ export const getLocalDataWithExpiry = (key) => {
 }
 
 
+// This function checks if it is a valid json, if so we will parse it so we can extract data
 export const isJSON = (str) => {
     try {
         return (JSON.parse(str) && !!str)
@@ -35,6 +50,13 @@ export const isJSON = (str) => {
     }
 }
 
+
+/* 
+    These functions are specifically for PAGE Products/index.js
+
+    Goal: User will be given options to filter thr product page by brand or category. 
+    Page State: These two functions will be called when the user loads the page in react hook useState(); if it has local storage data, it will use it; otherwise, it will be given the default filter, which is to show all products.
+*/
 
 export const hasLocalStorageCategory = () => {
     if (typeof window !== "undefined") {
