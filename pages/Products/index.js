@@ -2,26 +2,25 @@ import React, {useState, useEffect} from 'react'
 import { getSession } from 'next-auth/react'
 import { validBrands } from '../../services/utils';
 import { HeaderBlock} from '../../components/index'
-import { getProductsBy_Filter_Active_Brand } from '../../services';
+import { getProductsBy_Filter_Active_BrandV2 } from '../../services';
 import Image from 'next/image'
 import Link from 'next/link'
+import {setLocalDataWithExpiry, hasLocalStorageCategory, hasLocalStorageBrand} from '../../services/localStorage'
 
 export default function index({brands}) {
 
-      
-
     const handleBrandChange = (e) => {
         setSelectedBrand(e.target.value); // Changing the value of our select brand state by getting the value of our <option value>
+        setLocalDataWithExpiry('selectedBrand', e.target.value, 12000);
+
     }
 
     const handleCategoryChange = (e) => {
         setselectedCategory(e.target.id); // Changing the value of our select brand state by getting the value of our <a [id] ></a>
-        window.localStorage.setItem('selectedCategory', e.target.id);
+        setLocalDataWithExpiry('selectedCategory', e.target.id, 12000);
     }
 
     const initCategories = (products) => {
-
-         //let categories_ = products.length <= 0 && ['All'] // If somehow there is no products we are going to defulat our category to All | OLD CODE
 
          let uniqueCategories = []; // Here is a temp array that will hold our unique category filters
 
@@ -29,48 +28,36 @@ export default function index({brands}) {
 
             products.map((el) => el.filter.map((fil) => uniqueCategories.push(fil.replace('_', ' ')))); // looping through our products and pushing all filters in uniqueCategories array
             uniqueCategories = new Set(uniqueCategories) // getting unique values from our away so it can be distinct
-            uniqueCategories = [...uniqueCategories]; // converting our set into an array
-                        
-            //uniqueCategories = [...new Set(products.map((el) => el.filter))]; // looping through our products array and getting our filter value. If it is new, then we add inyto the array || OLD CODE
-            
+            uniqueCategories = [...uniqueCategories]; // converting our set into an array            
 
             if(uniqueCategories.length > 1){ // if the filter temp array is greater than 1 proceed
 
                 if(!uniqueCategories.includes(selectedCategory)) setselectedCategory('All') // we are checking if the current products have the same category as the previous brand if not then we will default to All
-                //uniqueCategories = uniqueCategories[uniqueCategories.length - 1]; // getting the last array of our temp categories which are all unique || OLD CODE
             }
             
-         }else setselectedCategory('All');
+         }//else setselectedCategory('All');
 
          setCategories(uniqueCategories.length > 1 ? uniqueCategories : ['All']) // changing the state value of our Categories, if uniqueCategories is empty, then categories_('All') will take over
-         return selectedCategory;
     }
+
+    
+
+    const [selectedCategory, setselectedCategory] = useState(hasLocalStorageCategory()); // this will carry the state of our category
+    const [selectedBrand, setSelectedBrand] = useState(hasLocalStorageBrand(brands)); // this will carry the state of our brand
+    const [products, setProducts] = useState([]); // this will carry the state of the products that will be showing
+    const [categories, setCategories] = useState([]); // This will cary the state of our categories that will be shown on the left side
+
 
 
     // Here we are getting the user available brands that they can choose from. We are rending it into our select field as <options></options>
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
-    // console.log(brands);
-
-    const [selectedCategory, setselectedCategory] = useState('All'); // this will carry the state of our category
-    const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : ''); // this will carry the state of our brand
-    const [products, setProducts] = useState([]); // this will carry the state of the products that will be showing
-    const [categories, setCategories] = useState([]); // This will cary the state of our categories that will be shown on the left side
-
-    // This will be called in the beginning when the components mounts
-    useEffect(() => {
-        if(window.localStorage.getItem('selectedCategory')){
-           return setselectedCategory(() => window.localStorage.getItem('selectedCategory'));
-        }
-    }, [])
-
     // This will be called in the beginning when the components mounts or when selectedBrand, or selectedCategory state value has changed
     useEffect(async () => {
-
-        getProductsBy_Filter_Active_Brand('All', selectedBrand).then((result) => {
-            initCategories(result);
+        return getProductsBy_Filter_Active_BrandV2(selectedCategory, selectedBrand).then(({result, filters}) => {
+            initCategories(filters);
+            setProducts(result)
         })
-        await getProductsBy_Filter_Active_Brand(selectedCategory, selectedBrand).then((result) => setProducts(result));
     }, [selectedBrand, selectedCategory]);
 
     return (
@@ -93,7 +80,7 @@ export default function index({brands}) {
                             <p className="text-gray-500 dark:text-gray-300">{products.length > 0 ? `${products.length} Items` : '0 Items' }</p>
                             <div className="flex items-center">
                                 <p className="text-gray-500 dark:text-gray-300">Brand</p>
-                                <select defaultValue={selectedBrand} onChange={handleBrandChange} className="font-medium text-gray-700 bg-transparent dark:text-gray-500 focus:outline-none border-none">
+                                <select value={selectedBrand} onChange={handleBrandChange} className="font-medium text-gray-700 bg-transparent dark:text-gray-500 focus:outline-none border-none">
                                     {selectionOptions}
                                 </select>
                             </div>
@@ -144,7 +131,7 @@ export async function getServerSideProps(context) {
             })
 
             brands = validBrands(brands); // this will go through the brand array and return distinct valid brands that the user can view
-            brands.unshift({brand: 'All', show: true});
+            brands.unshift({brand: 'All', show: true}); // this is a custom insert called All that which act as a brand that will show all products, inserting in the beginning of the array
         }
 
         return {

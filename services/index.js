@@ -297,3 +297,96 @@ export const getProductDetails = async (slug) => {
 
     return result.product;
 }
+
+
+
+export const getProductsBy_Filter_Active_BrandV2 = async (filter, brand) => {
+
+    if(!filter) filter = 'All';
+
+    try {
+
+        if(brand !== 'All') {
+
+
+            const filterquery = gql`
+            query GetProductsBy_Filter_Active_Brand($brand: String!) {
+                        products(where: {isActive: true, brand: {title: $brand}}) {
+                        filter
+                    }
+                }
+            `;
+
+            const query = gql`
+                query GetProductsBy_Filter_Active_Brand($brand: String!) {
+                        products(where: {isActive: true, filter_contains_some:` + filter.replace(' ', '_')  +`, brand: {title: $brand}}) {
+                        id
+                        price
+                        title
+                        filter
+                        slug
+                        mainImage {
+                            url
+                        }
+                    }
+                }
+            `;
+
+            const variables = {
+                filter,
+                brand
+            }
+    
+            const result = await request(graphqlAPI, query, variables);
+            const filters = await request(graphqlAPI, filterquery, variables);
+    
+            return {
+                result: result.products,
+                filters: filters.products
+            }
+
+        }else{
+
+
+            const filterquery = gql`
+            query GetProductsBy_Filter_Active_Brand() {
+                        products(where: {isActive: true}) {
+                        filter
+                    }
+                }
+            `;
+
+
+            const query = gql`
+            query GetProductsBy_Filter_Active_Brand() {
+                        products(where: {isActive: true, filter_contains_some:` + filter.replace(' ', '_')  +`}) {
+                        id
+                        price
+                        title
+                        filter
+                        slug
+                        mainImage {
+                            url
+                        }
+                    }
+                }
+            `;
+
+
+            const result = await request(graphqlAPI, query);
+            const filters = await request(graphqlAPI, filterquery);
+    
+            return {
+                result: result.products,
+                filters: filters.products
+            }
+           
+
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+
+}

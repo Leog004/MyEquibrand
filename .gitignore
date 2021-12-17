@@ -33,3 +33,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#pages
+/pages/Products/index_old.js
