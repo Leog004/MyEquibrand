@@ -390,3 +390,59 @@ export const getProductsBy_Filter_Active_BrandV2 = async (filter, brand) => {
 
 
 }
+
+
+
+export const GetVideos = async (brand) => {
+
+    try {
+
+        if(brand === 'All') {
+            const query = gql`
+            
+                query Videos {
+                    videos{
+                        title
+                        description
+                        youtubeVideoUrl
+                        thumbnailImage{
+                            url
+                        }
+                        brand{
+                            title
+                        }
+                    }
+                }
+            
+            `
+            const result = await request(graphqlAPI, query);
+            return result.videos;
+        }else{
+
+            const query = gql`
+            
+            query Videos ($brand: String!) {
+                videos(where:{brand: {title: $brand}}){
+                    title
+                    description
+                    youtubeVideoUrl
+                    thumbnailImage{
+                        url
+                    }
+                    brand{
+                        title
+                    }
+                }
+            }
+        
+        `
+        const result = await request(graphqlAPI, query, {brand});
+        return result.videos;
+           
+        }
+    }
+    catch(err){
+        return console.log(err);
+    }
+
+}
