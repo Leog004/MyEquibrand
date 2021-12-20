@@ -11,11 +11,12 @@ export default function index({brands}) {
     }
 
     const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : 'All'); // this will carry the state of our brand
-    const [videos, setVideos] = useState([]); 
+    const [videos, setVideos] = useState([]); // this will carry our state of videos to display
 
     // Here we are getting the user available brands that they can choose from. We are rending it into our select field as <options></options>
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
+    // This will run as soon as the component get mounted, and will update whenever selectedBrand changes
     useEffect(() => {
         GetVideos(selectedBrand).then((result) => setVideos(result));
     }, [selectedBrand])
@@ -38,7 +39,6 @@ export default function index({brands}) {
                             <Grid data={el} key={el.title} />
                         ))
                     }
-                    {/* <Grid/>    */}
                 </div>
             </div>
         </main>

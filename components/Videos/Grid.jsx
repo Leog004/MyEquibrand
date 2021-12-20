@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import {FacebookShareButton, FacebookIcon} from "react-share";
+import {FacebookShareButton} from "react-share";
 import ReactPlayer from 'react-player/youtube'
+import Image from 'next/image'
 
 toast.configure();
 
@@ -32,7 +33,10 @@ export default function Grid({data}) {
             !showVideo ? (
                 <>
                 <div class="flex flex-col sm:-mx-4 sm:flex-row">
-                    <img class="flex-shrink-0 object-cover w-24 h-24 rounded-lg sm:mx-4 ring-4 ring-gray-300" src={data.thumbnailImage.url} alt="" />
+                    <div onClick={showVideoClick} className='flex-shrink-0 object-cover w-24 h-24 rounded-lg sm:mx-4 ring-4 ring-gray-300 relative overflow-hidden'>
+                        <Image blurDataURL={data.thumbnailImage.url} placeholder={'blur'} layout='fill' objectFit='cover' src={data.thumbnailImage.url} alt={data.title} />
+                    </div>
+                    {/* <img  onClick={showVideoClick} class="flex-shrink-0 object-cover w-24 h-24 rounded-lg sm:mx-4 ring-4 ring-gray-300" src={data.thumbnailImage.url} alt="" /> */}
 
                     <div class="mt-4 sm:mx-4 sm:mt-0">
                         <h1 class="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white">{data.title || ''}</h1>
