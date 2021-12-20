@@ -1,9 +1,10 @@
 import React from 'react'
+import {HeaderBlock} from './../../components'
 
 export default function index() {
     return (
         <div>
-            <h1>Hello from video page!</h1>
+            <HeaderBlock title={'Videos'} />
         </div>
     )
 }

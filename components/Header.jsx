@@ -67,13 +67,9 @@ export default function Header() {
                         <Link href='/Products'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200"><span className='bg-red-500 absolute -top-5 -left-3 px-2 rounded-lg' style={{fontSize: '.5rem'}}>New</span>Products</a></Link>
                         <Link href='/News'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">News</a></Link>
                         <Link href='/Advertisement'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Advertising</a></Link>
-                        {/* <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Saddles</a></Link> */}
-                        <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Ishare</a></Link>
+                        <Link href='#'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">iShare</a></Link>
                         <Link href='/Videos'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Videos</a></Link>
                         <Link href='/Catelog'><a className="mr-2 text-xs sm:mr-5 sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Catelog</a></Link>
-                        {/* <Link href='#'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Clearence</a></Link> */}
-                        {/* <Link href='#'><a className="mr-5 hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200">Resources</a></Link> */}
-
                     </nav>
                 </div>
             )

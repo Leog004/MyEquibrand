@@ -21,16 +21,19 @@ export default function Footer() {
                   <span className="block uppercase text-gray-400 text-sm font-semibold mb-2">Useful Links</span>
                   <ul className="list-unstyled">
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://www.creative-tim.com/presentation?ref=njs-profile">About Us</a>
+                      <Link href={'/Products'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Products</a></Link>
                     </li>
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://blog.creative-tim.com?ref=njs-profile">Blog</a>
+                      <Link href={'/News'} ><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">News</a></Link>
                     </li>
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://www.github.com/creativetimofficial?ref=njs-profile">Github</a>
+                      <Link href={'/Advertisement'} ><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Advertisement</a></Link>
                     </li>
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://www.creative-tim.com/bootstrap-themes/free?ref=njs-profile">Free Products</a>
+                     <Link href={'/Videos'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Videos</a></Link>
+                    </li>
+                    <li>
+                      <Link href={'/iShare'} ><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">iShare</a></Link>
                     </li>
                   </ul>
                 </div>
@@ -38,16 +41,16 @@ export default function Footer() {
                   <span className="block uppercase text-gray-400 text-sm font-semibold mb-2">Other Resources</span>
                   <ul className="list-unstyled">
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile">MIT License</a>
+                      <Link href={'/Catelog'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Catelog</a></Link>
                     </li>
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://creative-tim.com/terms?ref=njs-profile">Terms &amp; Conditions</a>
+                      <Link href={'#'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Terms &amp; Conditions</a></Link>
                     </li>
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://creative-tim.com/privacy?ref=njs-profile">Privacy Policy</a>
+                      <Link href={'#'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Privacy Policy</a></Link>
                     </li>
                     <li>
-                      <a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="https://creative-tim.com/contact-us?ref=njs-profile">Contact Us</a>
+                      <Link href={'#'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Contact Us</a></Link>
                     </li>
                   </ul>
                 </div>
