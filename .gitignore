@@ -36,3 +36,4 @@ yarn-error.log*
 
 #pages
 /pages/Products/index_old.js
+public/iShare.lnk
