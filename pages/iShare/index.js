@@ -5,7 +5,6 @@ import { HeaderBlock } from './../../components'
 import ImageGrid from '../../components/iShare/ImageGrid';
 import BrandGrid from '../../components/iShare/BrandGrid';
 
-
 export default function index({brands}) {
 
     const handleBrandChange = (e) => {
@@ -17,7 +16,7 @@ export default function index({brands}) {
     }
 
     const handleSearch = (e) => {
-        
+
         setSearch(e.target.value);
 
         let tempImages = images.filter((el) => JSON.stringify(el.fileName).toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
@@ -82,7 +81,7 @@ export default function index({brands}) {
                     {
                        images.length > 0 ? images.map((el, index) => (
                            index <= 23 &&
-                            <ImageGrid key={el.fileName} url={`http://www.myequibrand.com/img/Products/iShare/2021/${selectedBrand}/Individual Images/${el.fileName}`} filename={el.fileName} />
+                            <ImageGrid key={el.fileName} url={`/iShare/2021/${selectedBrand}/Individual Images/${el.fileName}`} filename={el.fileName} />
                         ))
                         : <> {
                                 brands.length > 0 && brands.map((el) => (
