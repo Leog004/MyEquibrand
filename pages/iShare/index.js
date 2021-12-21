@@ -16,18 +16,38 @@ export default function index({brands}) {
         setSelectedBrand(e); // Changing the value of our select brand state by getting the value of our <option value>
     }
 
+    const handleSearch = (e) => {
+        
+        setSearch(e.target.value);
+
+        let tempImages = images.filter((el) => JSON.stringify(el.fileName).toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
+
+        if(tempImages.length > 0){ 
+            setImages(tempImages);
+        }
+
+        if(e.target.value === '' || !e.target.value){
+            fetchRequest();
+        }
+    }
+
+    const fetchRequest = async () => {
+        const data = await fetch('/api/reader?' + new URLSearchParams({
+            brand: selectedBrand,
+        })).then((res) => res.json())
+        setImages(data.data);
+    }
+
     const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : 'All'); // this will carry the state of our brand
+    const [search, setSearch] = useState('');
 
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
     const [images, setImages] = useState([]);
 
-    useEffect(async () => {
+    useEffect(() => {
         if(selectedBrand !== 'All'){
-            const data = await fetch('/api/reader?' + new URLSearchParams({
-                brand: selectedBrand,
-            })).then((res) => res.json())
-            setImages(data.data);
+            fetchRequest();
         }else{
             setImages([]);
         }
@@ -44,7 +64,7 @@ export default function index({brands}) {
                         {  images.length > 0 &&
                             <div className="flex items-center">
                                 <label className="text-gray-500 dark:text-gray-300">Search: </label>
-                                <input type='text' placeholder='search image..' />
+                                <input value={search} onChange={handleSearch} name='search' type='text' placeholder='search image..' />
                             </div>
                         }
                     </div>
