@@ -7,12 +7,12 @@ export default function Footer() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="flex flex-wrap text-left lg:text-left">
             <div className="w-full lg:w-6/12 px-4">
-              <h4 className="text-3xl fonat-semibold text-white">Let's keep in touch!</h4>
+              <h4 className="text-2xl fonat-semibold text-white">Let's keep in touch!</h4>
               <h5 className="text-md mt-0 mb-2 text-gray-400">
                 Find us on any of these platforms, we respond 1-2 business days.
               </h5>
               <div className="mt-6 lg:mb-0 mb-6">
-                <img src="http://www.myequibrand.com/img/MyEquibrand_Brand_White.png" style={{ height: '24px', marginTop: '10px', marginBottom: '10px'}} alt="logo" />             
+                <img src="http://www.myequibrand.com/img/MyEquibrand_Brand_White.png" style={{ height: '24px', width: 'auto', marginTop: '10px', marginBottom: '10px'}} alt="logo" />             
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
