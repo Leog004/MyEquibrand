@@ -62,7 +62,7 @@ export default function index({brands}) {
                     {
                        images.length > 0 ? images.map((el, index) => (
                            index <= 23 &&
-                            <ImageGrid url={`http://www.myequibrand.com/img/Products/iShare/2021/${selectedBrand}/Individual Images/${el.fileName}`} filename={el.fileName} />
+                            <ImageGrid key={el.fileName} url={`http://www.myequibrand.com/img/Products/iShare/2021/${selectedBrand}/Individual Images/${el.fileName}`} filename={el.fileName} />
                         ))
                         : <> {
                                 brands.length > 0 && brands.map((el) => (

@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import fs from 'fs'
 import { readdirSync } from "fs";
 import path from 'path'
 
@@ -12,11 +11,10 @@ export default function readerAPI(req, res) {
 
   // Function to get current filenames
   // in directory with specific extension
-  let files = fs.readdirSync(__dirname);
+  let files = readdirSync(__dirname);
   let images = [];
   let folders = [];
     
-  console.log("\Filenames with the .jpg extension:");
   files.forEach(file => {
     if (path.extname(file) == ".png"){
       images.push(...[{
