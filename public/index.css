@@ -77,3 +77,13 @@
 .isFirst:first-of-type {
   margin-top: 2rem !important;
 }
+
+
+
+/* for react toastify */
+.Toastify__toast-container--bottom-center {
+  bottom: 1em !important;
+  width: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
