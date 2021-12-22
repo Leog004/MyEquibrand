@@ -1,26 +1,50 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image'
+import JSZip from "jszip";
+import { saveAs } from 'file-saver';
 
-export default function BrandGrid({title, handleChange}) {
+export default function BrandGrid({title, handleChange,progress, setProgress}) {
 
+    useEffect(() => {
 
-    function download() {
+    },[])
 
+    async function download() {
 
-        fetch(`http://equibrand.com/Product Images/Brands/${title}/`, {
-        }).then((transfer) => {
-            return transfer.blob();                 // RETURN DATA TRANSFERED AS BLOB
-        }).then((bytes) => {
-            let elm = document.createElement('a');  // CREATE A LINK ELEMENT IN DOM
-            elm.href = URL.createObjectURL(bytes);  // SET LINK ELEMENTS CONTENTS
-            elm.setAttribute('download', title); // SET ELEMENT CREATED 'ATTRIBUTE' TO DOWNLOAD, FILENAME PARAM AUTOMATICALLY
-            elm.click()                             // TRIGGER ELEMENT TO DOWNLOAD
-        }).catch((error) => {
-            console.log(error);                     // OUTPUT ERRORS, SUCH AS CORS WHEN TESTING NON LOCALLY
+       let zip = new JSZip();
+       let folder = zip.folder('collection'); 
+
+        const data = await fetch('/api/readerZip?' + new URLSearchParams({
+            brand: title,
+        })).then((res) => res.json())  
+        
+        console.log(progress);
+
+        
+        data.files.map((el, index) => {
+            if(index <= 23){
+                const imageBlob = fetch(`http://equibrand.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
+                folder.file(`${el}`, imageBlob);
+            }
         })
 
+        folder.generateAsync({ 
+            type: "blob",     
+            compression: "DEFLATE",
+            compressionOptions: {
+            level: 1
+        }}, function updateCallback(metadata){
+                //console.log("progression: " + metadata.percent.toFixed(2) + " %")
+
+                setProgress(metadata.percent.toFixed(2));
+                if(metadata.currentFile) {
+                   // console.log("current file = " + metadata.currentFile);
+                }    
+        }).then(content =>{ 
+            saveAs(content, "files")
+            setProgress(0);
+        });
 
     }
 
@@ -47,6 +71,13 @@ export default function BrandGrid({title, handleChange}) {
                 </button>
             </div>
         </div>
+        {
+            (progress > 1 ) && 
+            <div className="w-full bg-gray-200 rounded-full">
+                <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: `${ progress}%`}}> { progress}%</div>
+            </div>
+        }
+
     </div>
     )
 }

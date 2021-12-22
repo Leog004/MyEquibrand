@@ -37,8 +37,19 @@ export default function index({brands}) {
         setImages(data.data);
     }
 
+    const initProgress = () => {
+        var progressBrands = Array.from(brands);
+        progressBrands.forEach((el) => {
+            el.status = 0;
+        })
+
+        return progressBrands;
+    }
+
     const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : 'All'); // this will carry the state of our brand
     const [search, setSearch] = useState('');
+
+    const [progress, setProgress] = useState(initProgress());
 
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
@@ -51,7 +62,6 @@ export default function index({brands}) {
             setImages([]);
         }
     },[selectedBrand])
-
 
 
     return (
@@ -86,7 +96,7 @@ export default function index({brands}) {
                         : <> {
                                 brands.length > 0 && brands.map((el) => (
                                     el.brand !== 'All' &&
-                                    <BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
+                                    <BrandGrid setProgress={setProgress} progress={progress} key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
                                 )) 
                              }
                              <h1 className='col-span-4 font-semibold'>*Click on Icon to download all images from brand</h1>
