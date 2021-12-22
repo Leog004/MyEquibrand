@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faCloudDownloadAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 
@@ -15,18 +15,14 @@ export default function BrandGrid({title, handleChange}) {
     const toastId = React.useRef(null);
 
     const [buttonClicked, setbuttonClicked] = useState(false);
-
-    // const Message = () => {
-        
-    //     toast.warn('The download is currently underway. Please stay on this page until the download is finished.', {position: toast.POSITION.BOTTOM_CENTER, autoClose: false});
-    // }
+    const [downloadPending, setdownloadPending] = useState(true);
+    const [downloadComplete, setDownloadComplete] = useState(false);
 
     async function download() {
 
        let zip = new JSZip();
        let folder = zip.folder('collection'); 
 
-       //Message();
 
         const data = await fetch('/api/readerZip?' + new URLSearchParams({
             brand: title,
@@ -49,29 +45,29 @@ export default function BrandGrid({title, handleChange}) {
             level: 1
         }}, function updateCallback(metadata){
 
+            //console.log("progression: " + metadata.percent.toFixed(2) + " %") // for getting the percent of download
 
-                // check if we already displayed a toast
-                if(toastId.current === null){
-                    toastId.current = toast.warn(`The download is currently underway for ${title} images. Please stay on this page until the download is finished.`, {
-                        progress: (0 / 100),
-                        position: toast.POSITION.BOTTOM_CENTER,
-                        autoClose: false,
-                        closeOnClick: false
-                    });
-                } else {
-                    toast.update(toastId.current, {
-                        progress: metadata.percent.toFixed(2) / 100
-                    })
-                }
-                //console.log("progression: " + metadata.percent.toFixed(2) + " %")
+            // check if we already displayed a toast
+            if(toastId.current === null){
+                setdownloadPending(false);
+                toastId.current = toast.warn(`The download is currently underway for ${title} images. Please stay on this page until the download is finished.`, {
+                    progress: (0 / 100),
+                    position: toast.POSITION.BOTTOM_CENTER,
+                    autoClose: false,
+                    closeOnClick: false
+                });
+            } else {
+                toast.update(toastId.current, {
+                    progress: metadata.percent.toFixed(2) / 100
+                })
+            }
 
-                //setProgress(metadata.percent.toFixed(2));
-                if(metadata.currentFile) {
-                   // console.log("current file = " + metadata.currentFile);
-                }    
+            if(metadata.currentFile) {
+                // console.log("current file = " + metadata.currentFile); // if you want to show the filename
+            }    
         }).then(content =>{ 
-            saveAs(content, "files")
-            //setProgress(0);
+            saveAs(content, title) // (content, filename) *Note, the first paramater takes the content, the second take what you want to name the folder. Remember this Leo
+            setDownloadComplete(true);
         });
 
     }
@@ -83,6 +79,16 @@ export default function BrandGrid({title, handleChange}) {
             style={{backgroundImage: `url('https://images.unsplash.com/flagged/photo-1557296126-ae91316e5746?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80')`}} >
             <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:opacity-75 transition duration-300 ease-in-out"></div>
             <div className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-center">
+            {
+                /* <!-- This alert will show when the user has clicked on the button | letting the user know that the folder is being downloaded --> */
+                buttonClicked && 
+                <div className={`w-full ${downloadPending ? 'bg-yellow-400' : 'bg-red-400' } ${downloadComplete && 'bg-green-400'} text-white text-sm absolute top-0 text-center`}>
+                    
+                    <p><FontAwesomeIcon icon={faCloudDownloadAlt} /> 
+                        {!downloadComplete ? downloadPending ? ' Pending Downlaod' : ' Your download has started' : ' Download is now complete'}
+                    </p>
+                </div>
+            }
             <h3 className="text-center">
                 <a className="text-white text-2xl font-bold text-center" href="#!">
                     <span className="absolute inset-0"></span>
@@ -102,13 +108,6 @@ export default function BrandGrid({title, handleChange}) {
                     </button>
                 </div>
             </div>
-        {/* {
-            (progress > 1 ) && 
-            <div className="w-full bg-gray-200 rounded-full">
-                <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: `${ progress}%`}}> { progress}%</div>
-            </div>
-        } */}
-
-    </div>
+        </div>
     )
 }
