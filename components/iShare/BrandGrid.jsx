@@ -23,10 +23,10 @@ export default function BrandGrid({title, handleChange,progress, setProgress}) {
 
         
         data.files.map((el, index) => {
-            if(index <= 23){
-                const imageBlob = fetch(`http://equibrand.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
-                folder.file(`${el}`, imageBlob);
-            }
+          
+            const imageBlob = fetch(`http://equibrand.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
+            folder.file(`${el}`, imageBlob);
+            
         })
 
         folder.generateAsync({ 
