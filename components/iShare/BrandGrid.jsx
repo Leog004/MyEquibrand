@@ -1,10 +1,23 @@
+/*
+    MyEquibrand 2021 - BrandGrid Component - 12/21/21
+    Leo Garza, Justin Johnson
+
+    Goal: To download files from our directory and generate a zip folder that the client can recieve
+    PAGE REFERENCES: api/readerZip.js, pages/iShare/index.js
+    Status: 
+        We are able to sucessfully generate a zip folder to the client. 
+*/
+
+
 import React, {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudDownloadAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 
-
+/*
+    This imports toastify, the pop-up window
+*/
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 toast.configure();
@@ -12,32 +25,36 @@ toast.configure();
 
 export default function BrandGrid({title, handleChange}) {
 
-    const toastId = React.useRef(null);
+    const toastId = React.useRef(null); // creating a reference to variable toastID
 
-    const [buttonClicked, setbuttonClicked] = useState(false);
-    const [downloadPending, setdownloadPending] = useState(true);
-    const [downloadComplete, setDownloadComplete] = useState(false);
+    const [buttonClicked, setbuttonClicked] = useState(false); // will hold the state if the button to download has been clicked
+    const [downloadPending, setdownloadPending] = useState(true); // will hold the state if we had started to download folder
+    const [downloadComplete, setDownloadComplete] = useState(false); // will hold the state if the download is complete
 
     async function download() {
 
-       let zip = new JSZip();
-       let folder = zip.folder('collection'); 
+       let zip = new JSZip(); // creating a JSzip instance
+       let folder = zip.folder('collection');  // creates a folder
 
-
+        // Here we are calling our API readerZip. We are passing a parameter that will contain our brand name to indicate the brand folder we would like to open
         const data = await fetch('/api/readerZip?' + new URLSearchParams({
             brand: title,
-        })).then((res) => res.json())  
+        })).then((res) => res.json()) // this should return all the file names within that folder and store it in an array object called data
             
    
-
+        // Here we are going to iterate all the filenames that we recieved from our api.
         data.files.map((el, index) => {
           
+            // We are doing a fetch request for each file. Example: www.equibrand.com/../brands/cashel/ascsd.png and then return the blob that will allow us to convert that to an image
             const imageBlob = fetch(`http://equibrand.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
-            folder.file(`${el}`, imageBlob);
             
-        })
+            // creating a file to our zip folder. Parameter 1: filename 'exampleFile.png', Parameter 2: blob
+            folder.file(`${el}`, imageBlob); 
+            
+        });
 
         
+        // Here we are going to zip the folder and all its content, there is 9 compression levels: 1 - 9 (fast - slow). 
         folder.generateAsync({ 
             type: "blob",     
             compression: "DEFLATE",
@@ -45,29 +62,41 @@ export default function BrandGrid({title, handleChange}) {
             level: 1
         }}, function updateCallback(metadata){
 
-            //console.log("progression: " + metadata.percent.toFixed(2) + " %") // for getting the percent of download
 
-            // check if we already displayed a toast
+            // check if we already displayed a toast, if not we are going to create a new toast that show on screen
             if(toastId.current === null){
-                setdownloadPending(false);
+
+                setdownloadPending(false); // here we are setting the we are no longer pending and downloading has started
+
+                // toast properties
                 toastId.current = toast.warn(`The download is currently underway for ${title} images. Please stay on this page until the download is finished.`, {
                     progress: (0 / 100),
                     position: toast.POSITION.BOTTOM_CENTER,
                     autoClose: false,
                     closeOnClick: false
                 });
+
             } else {
+
+                // here we are updating our progress bar of the toast. || console.log("progression: " + metadata.percent.toFixed(2) + " %") // for getting the percent of download
                 toast.update(toastId.current, {
                     progress: metadata.percent.toFixed(2) / 100
                 })
+
             }
 
+            // This if statement checks if the currentFile is valid. || // console.log("current file = " + metadata.currentFile); // if you want to show the filename that is being downloaded
             if(metadata.currentFile) {
-                // console.log("current file = " + metadata.currentFile); // if you want to show the filename
+                
             }    
+
+
         }).then(content =>{ 
-            saveAs(content, title) // (content, filename) *Note, the first paramater takes the content, the second take what you want to name the folder. Remember this Leo
-            setDownloadComplete(true);
+
+            // Then once all the files have been added to the folder and zip, we are now going to download it into the client computers || USING DEPENCIE file-saver
+            saveAs(content, title) // (content, filename) *Note, the first paramater takes the content, the second take what you want to name the folder.
+
+            setDownloadComplete(true); // setting that our downloadcomplete state is now true
         });
 
     }
