@@ -16,7 +16,7 @@ import path from 'path'
 // function to encode file data to base64 encoded string
 function base64_encode(file) {
   // read binary data
-  var bitmap = readFile(file);
+  var bitmap = readFileSync(file);
   // convert binary data to base64 encoded string
   return Buffer(bitmap).toString('base64');
 }
