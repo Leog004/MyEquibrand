@@ -4,6 +4,7 @@ import { validBrands } from '../../services/utils';
 import { HeaderBlock } from './../../components'
 import ImageGrid from '../../components/iShare/ImageGrid';
 import BrandGrid from '../../components/iShare/BrandGrid';
+import BrandGrid_New from '../../components/iShare/BrandGrid_new';
 
 
 export default function index({brands}) {
@@ -96,7 +97,8 @@ export default function index({brands}) {
                         : <> {
                                 brands.length > 0 && brands.map((el) => (
                                     el.brand !== 'All' &&
-                                    <BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
+                                    //<BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
+                                    <BrandGrid_New key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
                                 )) 
                              }
                              <h1 className='col-span-4 font-semibold'>*Click on Icon to download all images from brand</h1>
