@@ -97,8 +97,8 @@ export default function index({brands}) {
                         : <> {
                                 brands.length > 0 && brands.map((el) => (
                                     el.brand !== 'All' &&
-                                    //<BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
-                                    <BrandGrid_New key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
+                                    <BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
+                                    //<BrandGrid_New key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
                                 )) 
                              }
                              <h1 className='col-span-4 font-semibold'>*Click on Icon to download all images from brand</h1>
