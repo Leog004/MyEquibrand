@@ -7,6 +7,10 @@
   Goal: Api request to pull images from our directories
   Parameters: brand
   results: array of images, folders
+
+  This version is optimal to get images within our local directory. However, it is to slow. The user will experiance a frozen screen and images will take a long time to show.
+  Possible solutions is to implement a web worker so the request will be made using its own thread and not on the main thread. This will help the screen from not freezing, 
+  however this will not solve the issue of the images showing on the screen.  
 */
 
 import { readFileSync, readFile, readdirSync } from "fs"; // using this function of fs to read content from folder
