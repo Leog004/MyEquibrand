@@ -23,13 +23,38 @@ import 'react-toastify/dist/ReactToastify.css'
 toast.configure();
 
 
-export default function BrandGrid({title, handleChange}) {
+export default function BrandGrid({brandName, handleChange}) {
+
+    const GetBackgroundImage = () => {
+        switch(brandName){
+            case 'Classic Equine' : {
+                return 'https://classicequine.com/ce/Images/HomePage/Header/CEhailey1860x780v2[3].jpg';
+            }
+
+            case 'Martin Saddlery': {
+                return 'https://martinsaddlery.com/Images/Home%20Images/Martin/Slider1920x860Lisa.jpg';
+            }
+
+            case 'Rattler Rope': {
+                return 'https://rattlerrope.com/rr/images/HomePage/Header/HomePage3.jpg';
+            }
+
+            case 'Classic Rope':{
+                return 'https://classicrope.com/cr/Images/Pages/Banners/CRslideHome02.jpg';
+            }
+
+            default: {
+                return 'https://images.unsplash.com/flagged/photo-1557296126-ae91316e5746?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+            }
+        }
+    }
 
     const toastId = React.useRef(null); // creating a reference to variable toastID
 
     const [buttonClicked, setbuttonClicked] = useState(false); // will hold the state if the button to download has been clicked
     const [downloadPending, setdownloadPending] = useState(true); // will hold the state if we had started to download folder
     const [downloadComplete, setDownloadComplete] = useState(false); // will hold the state if the download is complete
+    const [backgroundImage, setBackgroundImage] = useState(GetBackgroundImage);
 
     async function download() {
 
@@ -38,7 +63,7 @@ export default function BrandGrid({title, handleChange}) {
 
         // Here we are calling our API readerZip. We are passing a parameter that will contain our brand name to indicate the brand folder we would like to open
         const data = await fetch('/api/readerZip?' + new URLSearchParams({
-            brand: title,
+            brand: brandName,
         })).then((res) => res.json()) // this should return all the file names within that folder and store it in an array object called data
             
    
@@ -46,7 +71,7 @@ export default function BrandGrid({title, handleChange}) {
         data.files.map((el, index) => {
           
             // We are doing a fetch request for each file. Example: www.equibrand.com/../brands/cashel/ascsd.png and then return the blob that will allow us to convert that to an image
-            const imageBlob = fetch(`https://traincompetewin.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
+            const imageBlob = fetch(`https://traincompetewin.com/Product Images/Brands/${brandName}/${el}`).then(response => response.blob());
             
             // creating a file to our zip folder. Parameter 1: filename 'exampleFile.png', Parameter 2: blob
             folder.file(`${el}`, imageBlob); 
@@ -69,7 +94,7 @@ export default function BrandGrid({title, handleChange}) {
                 setdownloadPending(false); // here we are setting the we are no longer pending and downloading has started
 
                 // toast properties
-                toastId.current = toast.warn(`The download is currently underway for ${title} images. Please stay on this page until the download is finished.`, {
+                toastId.current = toast.warn(`The download is currently underway for ${brandName} images. Please stay on this page until the download is finished.`, {
                     progress: (0 / 100),
                     position: toast.POSITION.BOTTOM_CENTER,
                     autoClose: false,
@@ -94,18 +119,21 @@ export default function BrandGrid({title, handleChange}) {
         }).then(content =>{ 
 
             // Then once all the files have been added to the folder and zip, we are now going to download it into the client computers || USING DEPENCIE file-saver
-            saveAs(content, title) // (content, filename) *Note, the first paramater takes the content, the second take what you want to name the folder.
+            saveAs(content, brandName) // (content, filename) *Note, the first paramater takes the content, the second take what you want to name the folder.
 
             setDownloadComplete(true); // setting that our downloadcomplete state is now true
         });
 
     }
 
+
+
+
     return (
         <div className='relative'>
-            <article onClick={() => handleChange(title)} className="relative w-full h-64 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out"
+            <article onClick={() => handleChange(brandName)} className="relative w-full h-64 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out"
 
-            style={{backgroundImage: `url('https://images.unsplash.com/flagged/photo-1557296126-ae91316e5746?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80')`}} >
+            style={{backgroundImage: `url(${backgroundImage})`}} >
             <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:opacity-75 transition duration-300 ease-in-out"></div>
             <div className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-center">
             {
@@ -121,7 +149,7 @@ export default function BrandGrid({title, handleChange}) {
             <h3 className="text-center">
                 <a className="text-white text-2xl font-bold text-center" href="#!">
                     <span className="absolute inset-0"></span>
-                    {title}
+                    {brandName}
                 </a>
             </h3>
             </div>

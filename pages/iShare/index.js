@@ -96,7 +96,7 @@ export default function index({brands}) {
                         : <> {
                                 brands.length > 0 && brands.map((el) => (
                                     el.brand !== 'All' &&
-                                    <BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
+                                    <BrandGrid key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} brandName={el.brand} />
                                     //<BrandGrid_New key={el.brand} handleChange={handleBrandChangeOnBackgroundImage} title={el.brand} />
                                 )) 
                              }
