@@ -46,7 +46,7 @@ export default function BrandGrid({title, handleChange}) {
         data.files.map((el, index) => {
           
             // We are doing a fetch request for each file. Example: www.equibrand.com/../brands/cashel/ascsd.png and then return the blob that will allow us to convert that to an image
-            const imageBlob = fetch(`http://equibrand.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
+            const imageBlob = fetch(`https://traincompetewin.com/Product Images/Brands/${title}/${el}`).then(response => response.blob());
             
             // creating a file to our zip folder. Parameter 1: filename 'exampleFile.png', Parameter 2: blob
             folder.file(`${el}`, imageBlob); 

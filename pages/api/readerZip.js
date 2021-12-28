@@ -15,9 +15,12 @@ export default function readerApiZip(req, res){
 
   let brand = req.query.brand || 'Cashel'; // getting the query and looking for brand parameter, if null or does not exist we default to cashel
   //const __dirname = `//gra-web20/c$/Home/iShare/2021/${brand}`; // the path we are looking for in developement
-  const __dirname = `C:/Home/iShare/2021/${brand}`; // the path we are looking for in production
+  //const __dirname = `C:/Home/iShare/2021/${brand}`; // the path we are looking for in production
+  const __dirnameTrainCompeteWinLocal = `C:/Home/TrainCompeteWin/Product Images/Brands/${brand}`; // the path we are looking for in production and Train Compete Win
+  //const __dirnameTrainCompeteWinLocalDev = `//gra-web20/c$/Home/TrainCompeteWin/Product Images/Brands/${brand}`; // the path we are looking for in production and Train Compete Win
 
-  let files = readdirSync(__dirname); // reading path
+
+  let files = readdirSync(__dirnameTrainCompeteWinLocalDev); // reading path
 
   // return the response as a json that carries our images, folders, and the whole files object to compare.
   res.status(200).json({
