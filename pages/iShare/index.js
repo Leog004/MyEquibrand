@@ -4,7 +4,6 @@ import { validBrands } from '../../services/utils';
 import { HeaderBlock } from './../../components'
 import ImageGrid from '../../components/iShare/ImageGrid';
 import BrandGrid from '../../components/iShare/BrandGrid';
-import BrandGrid_New from '../../components/iShare/BrandGrid_new';
 
 
 export default function index({brands}) {
