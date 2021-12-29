@@ -32,7 +32,7 @@ export const getLocalDataWithExpiry = (key) => {
     const now = new Date();
 
     if(now.getTime() > item.expiry){
-        alert('Item is removed');
+        //alert('Item is removed');
         localStorage.removeItem(key);
         return null;
     }

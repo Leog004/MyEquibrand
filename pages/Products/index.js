@@ -55,8 +55,26 @@ export default function index({brands}) {
     // This will be called in the beginning when the components mounts or when selectedBrand, or selectedCategory state value has changed
     useEffect(async () => {
         return getProductsBy_Filter_Active_BrandV2(selectedCategory, selectedBrand).then(({result, filters}) => {
-            initCategories(filters);
-            setProducts(result)
+            var validFiltersToShow = filters;
+            var validProductsToShow = result;
+
+            if(selectedBrand === 'All'){
+                 validFiltersToShow = filters.filter((el) => {
+                    return brands.some((f) => {
+                        return f.brand === el.brand.title
+                    })
+                })
+
+                 validProductsToShow = result.filter((el) => {
+                    return brands.some((f) => {
+                        return f.brand === el.brand.title
+                    });
+                })
+            }
+            //console.log(validProductsToShow, brands, result);
+
+            initCategories(validFiltersToShow);
+            setProducts(validProductsToShow)
         })
     }, [selectedBrand, selectedCategory]);
 

@@ -18,7 +18,18 @@ export default function index({brands}) {
 
     // This will run as soon as the component get mounted, and will update whenever selectedBrand changes
     useEffect(() => {
-        GetVideos(selectedBrand).then((result) => setVideos(result));
+        GetVideos(selectedBrand).then((result) => {
+            var validVideosToShow = result;
+
+            if(selectedBrand === 'All'){
+                validVideosToShow = result.filter((el) => {
+                    return brands.some((f) => {
+                        return f.brand === el.brand.title;
+                    })
+                })
+            }
+            setVideos(validVideosToShow)
+        });
     }, [selectedBrand])
     
     return (

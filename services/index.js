@@ -313,6 +313,9 @@ export const getProductsBy_Filter_Active_BrandV2 = async (filter, brand) => {
             query GetProductsBy_Filter_Active_Brand($brand: String!) {
                         products(where: {isActive: true, brand: {title: $brand}}) {
                         filter
+                        brand {
+                            title
+                        }
                     }
                 }
             `;
@@ -327,6 +330,9 @@ export const getProductsBy_Filter_Active_BrandV2 = async (filter, brand) => {
                         slug
                         mainImage {
                             url
+                        }
+                        brand {
+                            title
                         }
                     }
                 }
@@ -352,6 +358,9 @@ export const getProductsBy_Filter_Active_BrandV2 = async (filter, brand) => {
             query GetProductsBy_Filter_Active_Brand() {
                         products(where: {isActive: true}) {
                         filter
+                        brand {
+                            title
+                        }
                     }
                 }
             `;
@@ -365,6 +374,9 @@ export const getProductsBy_Filter_Active_BrandV2 = async (filter, brand) => {
                         title
                         filter
                         slug
+                        brand {
+                            title
+                        }
                         mainImage {
                             url
                         }
