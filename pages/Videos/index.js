@@ -27,6 +27,7 @@ export default function index({brands}) {
                         return f.brand === el.brand.title;
                     })
                 })
+                
             }
             setVideos(validVideosToShow)
         });
