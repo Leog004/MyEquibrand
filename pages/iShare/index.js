@@ -4,6 +4,7 @@ import { validBrands } from '../../services/utils';
 import { HeaderBlock } from './../../components'
 import ImageGrid from '../../components/iShare/ImageGrid';
 import BrandGrid from '../../components/iShare/BrandGrid';
+import Pagination from '../../components/Helpers/Pagination';
 
 
 export default function index({brands}) {
@@ -37,20 +38,12 @@ export default function index({brands}) {
         setImages(data.data);
     }
 
-    // const initProgress = () => {
-    //     var progressBrands = Array.from(brands);
-    //     progressBrands.forEach((el) => {
-    //         el.status = 0;
-    //     })
-
-    //     return progressBrands;
-    // }
 
     const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : 'All'); // this will carry the state of our brand
     const [search, setSearch] = useState('');
-
-    //const [progress, setProgress] = useState(initProgress());
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(30);
+    const [active, setActive] = useState(1);
     const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
 
     const [images, setImages] = useState([]);
@@ -63,6 +56,17 @@ export default function index({brands}) {
         }
     },[selectedBrand])
 
+
+    // Get currrent images
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentImages = images.slice(indexOfFirstPost, indexOfLastPost);
+
+            // change page
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber)
+        setActive(pageNumber);
+    }
 
     return (
         <main>
@@ -89,7 +93,7 @@ export default function index({brands}) {
                
                     <div className={`grid sm:grid-cols-2 md:grid-cols-4 gap-y-24 mt-20 ${images.length > 0 ? '' : 'gap-x-10'}`}>
                     {
-                       images.length > 0 ? images.map((el, index) => (
+                        currentImages.length > 0 ? currentImages.map((el, index) => (
                            index <= 23 &&
                             <ImageGrid key={el.fileName} url={`http://equibrand.com/Product Images/Brands/${selectedBrand}/${el.fileName}`} filename={el.fileName} />
                         ))
@@ -105,7 +109,8 @@ export default function index({brands}) {
                            
                     }
                     </div>
-               
+                    <Pagination active={active} postsPerPage={postsPerPage} totalPosts={images.length} paginate={paginate} />
+
             </div>
 
 

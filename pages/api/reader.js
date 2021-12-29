@@ -25,7 +25,7 @@ export default function readerAPI(req, res) {
 
 
     const __dirnameTrainCompeteWinLocal = `C:/Home/TrainCompeteWin/Product Images/Brands/${brand}`; // the path we are looking for in production and Train Compete Win
-    //const __dirnameTrainCompeteWinLocalDev = `//gra-web20/c$/Home/TrainCompeteWin/Product Images/Brands/${brand}`; // the path we are looking for in production and Train Compete Win
+    //const __dirnameTrainCompeteWinLocal = `//gra-web20/c$/Home/TrainCompeteWin/Product Images/Brands/${brand}`; // the path we are looking for in production and Train Compete Win
 
   let files = readdirSync(__dirnameTrainCompeteWinLocal); // reading path
 
