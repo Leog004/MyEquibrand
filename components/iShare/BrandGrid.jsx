@@ -44,7 +44,7 @@ export default function BrandGrid({brandName, handleChange}) {
             }
 
             default: {
-                return 'https://images.unsplash.com/flagged/photo-1557296126-ae91316e5746?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+                return 'https://www.cashelcompany.com/CC/Blog/Images/Page/fse-cfms2-01.jpg';
             }
         }
     }

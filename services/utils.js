@@ -97,7 +97,7 @@ export const validBrands = (arr) => {
 
         if(brand === 'Martin Strap') tempArray.push({"brand": brand.replace('Strap', 'Saddlery'), "show": true});
 
-        if(brand === 'Cashel') tempArray.push({"brand": brand, "show": true});
+        if(brand === 'Cashel Company') tempArray.push({"brand": brand, "show": true});
 
     })
 
