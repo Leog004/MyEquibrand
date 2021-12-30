@@ -85,6 +85,7 @@ export const GetUser = async (email, pass) => {
 
 export const validBrands = (arr) => {
 
+    arr = [...new Set(arr)] // This will convert the array to have distinct values. Because some dealers have the same privelages more than once
     let tempArray = [];
 
     arr.forEach((brand) => {
