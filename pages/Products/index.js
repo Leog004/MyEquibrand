@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { getSession } from 'next-auth/react'
-import { validBrands } from '../../services/utils';
+import {validBrands } from '../../services/utils';
 import { HeaderBlock} from '../../components/index'
 import { getProductsBy_Filter_Active_BrandV2 } from '../../services';
 import Image from 'next/image'
@@ -8,6 +8,7 @@ import Link from 'next/link'
 import {setLocalDataWithExpiry, hasLocalStorageCategory, hasLocalStorageBrand} from '../../services/localStorage'
 
 export default function index({brands}) {
+    
 
     const handleBrandChange = (e) => {
         setSelectedBrand(e.target.value); // Changing the value of our select brand state by getting the value of our <option value>
@@ -107,17 +108,20 @@ export default function index({brands}) {
                         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {
                                 products.length > 0 && products.map((el) => (
-                                    <div key={el.title} className="flex flex-wrap text-center items-center justify-center w-full max-w-lg mx-auto pb-10 border-b-2 border-gray-200 sm:border-none sm:p-0">
+                                    <div key={el.title} className="flex flex-wrap text-center justify-center w-full max-w-lg mx-auto pb-10 border-b-2 border-gray-200 sm:border-none sm:p-0 items-end">
                                         <div className='object-contain w-full rounded-md h-72 xl:h-80 relative cursor-pointer hover:scale-125 transform transition-all ease-out duration-300'>
                                         <Link href={{pathname: '/Products/[slug]', query: {slug: encodeURIComponent(el.slug)}}}> 
                                             <Image blurDataURL={el.mainImage.url} placeholder={'blur'} objectFit={'contain'} layout={'fill'} src={el.mainImage.url} alt={el.title} />
                                         </Link>
                                         </div>
+                                            {selectedBrand === 'All' && (
+                                                <span className={`text-xs text-yellow-800 font-semibold w-full`}>{el.brand.title}</span>
+                                            )}
                                         <h4 className="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200 text-center capitalize w-full">{el.title.toLowerCase()}</h4>
                                         <p className="text-blue-500 w-full">${el.price}</p>
                                         <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
                                             <Link href={{pathname: '/Products/[slug]', query: {slug: encodeURIComponent(el.slug)}}}> 
-                                                <span className="mx-1">View More</span>
+                                                <span className="mx-1 w-full">View More</span>
                                             </Link>
                                         </button>
                                     </div>
