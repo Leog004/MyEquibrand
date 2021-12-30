@@ -3,7 +3,7 @@ import React from 'react'
 export default function FeaturedBrands() {
     return (
         <div className='bg-white w-full relative container pt-10 pb-20 mx-auto justify-center text-center'>
-            <div className='absolute h-12  w-full bg-white transform -skew-y-2 -top-6 z-0'></div>
+            <div className='absolute h-12 w-screen bg-white transform -skew-y-2 -top-4 z-0'></div>
             <div className="max-w-5xl mx-auto pt-12">
                 {/* <!-- title --> */}
                 <div className="relative flex items-end font-bold px-8 sm:px-0">
