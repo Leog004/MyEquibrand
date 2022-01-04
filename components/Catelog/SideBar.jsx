@@ -10,7 +10,7 @@ export default function SideBar({setoutSideNumber}) {
     const handleChange = (e) => {
         setnumber(e.target.value);
 
-        if(e.target.value <= 350){
+        if(e.target.value <= 332){
             setoutSideNumber(e.target.value);
             document.getElementById('PageSearch').style.border = '1px solid rgba(209, 213, 219, 0.7)';
         }else{
@@ -50,21 +50,21 @@ export default function SideBar({setoutSideNumber}) {
                     <span  class="mx-4 text-sm">Rattler Rope</span>
                 </a>
 
-                <a onClick={() => {setoutSideNumber(23); setnumber(23)}} class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
+                <a onClick={() => {setoutSideNumber(37); setnumber(37)}} class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
                 <FontAwesomeIcon className='w-5 h-5 text-gray-400' icon={faEllipsisV} />
 
 
                     <span  class="mx-4 text-sm">Classic Equine</span>
                 </a>
 
-                <a  onClick={() => {setoutSideNumber(139); setnumber(139)}}  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
+                <a  onClick={() => {setoutSideNumber(109); setnumber(109)}}  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
                 <FontAwesomeIcon className='w-5 h-5 text-gray-400' icon={faEllipsisV} />
 
 
-                    <span class="mx-4 text-sm">Train Win Compete</span>
+                    <span class="mx-4 text-sm">REM</span>
                 </a>
 
-                <a onClick={() => {setoutSideNumber(150); setnumber(150)}} class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
+                <a onClick={() => {setoutSideNumber(238); setnumber(238)}} class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
                 <FontAwesomeIcon className='w-5 h-5 text-gray-400' icon={faEllipsisV} />
 
 
@@ -73,7 +73,7 @@ export default function SideBar({setoutSideNumber}) {
 
                 <hr class="my-6 dark:border-gray-600" />
 
-                <a  onClick={() => {setoutSideNumber(259); setnumber(259)}} class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
+                <a  onClick={() => {setoutSideNumber(256); setnumber(256)}} class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#!">
                 <FontAwesomeIcon className='w-5 h-5 text-gray-400' icon={faEllipsisV} />
 
 

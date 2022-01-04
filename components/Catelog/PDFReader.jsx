@@ -32,7 +32,7 @@ export default function PDFReader({outSideNumber}) {
         />
         
         <Document
-          file="/assets/21EbMyEquibrand.pdf"
+          file="/assets/22EBcat80.pdf"
           onLoadSuccess={onDocumentLoadSuccess}
           renderMode='svg'
         >
