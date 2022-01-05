@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { signIn, signOut, useSession} from 'next-auth/react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSearch, faIdCard, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSearch, faIdCard, faSignOutAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { Search } from '.';
 import {useRouter} from 'next/router';
 
@@ -30,7 +30,7 @@ export default function Header() {
                 {
                     session 
                     ?   <div className='flex'>
-                            <button className='cursor-pointer uppercase font-semibold text-xs'> 
+                            <button onClick={() => router.push('/Account')} className='cursor-pointer uppercase font-semibold text-xs'>
                                 <FontAwesomeIcon className='mr-4' icon={faIdCard}/>
                             </button>
                             |
@@ -50,8 +50,10 @@ export default function Header() {
             <img src="http://www.myequibrand.com/img/MyEquibrand_Brand_White.png" style={{ height: '24px', marginTop: '10px', marginBottom: '10px'}} alt="logo" />
          </Link>
          
-         <div className='flex items-center border-gray-800 px-4 py-2 border-l border-r m-0'>
-
+         <div className='flex items-center border-gray-800 px-4 py-2 border-l border-r m-0 relative'>
+            {session && (
+                <Link href='/PriceDetails'><a className="text-xs sm:text-sm hover:text-gray-200 cursor-pointer border-b border-transparent hover:border-indigo-200"><FontAwesomeIcon className='mr-2' icon={faFileDownload}/>Price Details</a></Link>               
+            )}
          </div>
          {/* <div className='flex items-center border-gray-800 px-4 py-2 border-l border-r m-0'>
             <Link href='#'><a onClick={handleSearch} className='cursor-pointer uppercase font-semibold text-xs'> <FontAwesomeIcon className='mr-2' icon={faSearch}/> Search</a></Link>
