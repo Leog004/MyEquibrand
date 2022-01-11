@@ -20,7 +20,7 @@ export default function Hero({session}) {
             </div>
         </div>
         
-        {session && <FeaturedProduct/>}
+        {/* {session && <FeaturedProduct/>} */}
         </>
     )
 }

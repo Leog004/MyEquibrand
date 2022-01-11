@@ -53,7 +53,7 @@ export default function index() {
                         {
                             // here we are iterating through our object array and displaying its contents
                             files.map((el) => (                    
-                                <div key={el.title} className='flex flex-col justify-center items-center sm:gap-y-5'>
+                                <div key={el.title} className='flex flex-col justify-center items-center sm:gap-y-5 cursor-pointer'>
                                     <img onClick={() => handleImageClick(el.Asset)} className='h-20 w-20' src='/assets/xlsImage.jpg' />
                                     <p onClick={() => handleImageClick(el.Asset)} className='text-sm font-semibold'>{el.Title}</p>
                                 </div>

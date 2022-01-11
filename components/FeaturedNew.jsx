@@ -1,10 +1,15 @@
 import React, {useEffect, useState} from 'react'
+import {useSession} from 'next-auth/react'
 import { getNews } from '../services';
+import Link from 'next/link'
+import sendMail from '../Email'
 
 export default function FeaturedNew({validBrands}) {
 
     const [news, setNews] = useState([]);
+    const {data: session} = useSession(); // This grabs our session data. If the user is not logged in, then the session will be null
 
+  
     useEffect(() => {
         getNews().then((result) => {
 
@@ -18,6 +23,11 @@ export default function FeaturedNew({validBrands}) {
 
         });
     }, [])
+
+    const handleContactClick = async () => {
+        let response = await sendMail('This is an email sent from MyEquibrand', session.user?.name);
+        console.log(response);
+    }
 
     return (
         <div className='bg-gray-100 w-full relative pt-10 pb-20 mx-auto justify-center text-center'>
@@ -43,8 +53,10 @@ export default function FeaturedNew({validBrands}) {
                                         <p className='text-base text-black text-left'>{el.description}</p>
 
                                         <div className='flex mt-20 w-full justify-between'>
+                                            <Link href={`/News/${el.slug}`}>
                                             <button className='bg-primary px-2 py-2 text-white rounded-md shadow-sm hover:scale-105 hover:shadow-lg transition-all duration-150'>See more</button>
-                                            <button className='bg-red-400 px-2 py-2 text-white rounded-md shadow-sm hover:scale-105 hover:shadow-lg transition-all duration-150'>Contact</button>
+                                            </Link>
+                                            <button onClick={handleContactClick} className='bg-red-400 px-2 py-2 text-white rounded-md shadow-sm hover:scale-105 hover:shadow-lg transition-all duration-150'>Contact</button>
                                         </div>
                                     </div>
                                 </div>        
@@ -52,9 +64,9 @@ export default function FeaturedNew({validBrands}) {
                         }
                     </div>
                 </div>
-
-                <button className='bg-primary mt-20 px-2 py-2 text-white rounded-md shadow-sm hover:scale-105 hover:shadow-lg transition-all duration-150'>View All News</button>
-
+                <Link href={`/News/`}>
+                 <button className='bg-primary mt-20 px-2 py-2 text-white rounded-md shadow-sm hover:scale-105 hover:shadow-lg transition-all duration-150'>View All News</button>
+                </Link>
             </div>
         </div>
     )
