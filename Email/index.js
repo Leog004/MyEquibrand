@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export default async function sendMail(link, user) {
+export default async function SendEmailContact_Message_Dealer(link, user) {
   try {
     let request = await axios
       .post("/api/email", {
         name: "MyEquibrand",
-        email: "lgarza@equibrand.com",
-        subject: "Someone sent you a Link.",
+        email: "meadmin@equibrand.com",
+        subject: `MyEquibrand - ${user} has a request`,
         msg: link,
         user: user
       })

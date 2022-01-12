@@ -25,7 +25,7 @@ export default function FeaturedNew({validBrands}) {
     }, [])
 
     const handleContactClick = async () => {
-        let response = await sendMail('This is an email sent from MyEquibrand', session.user?.name);
+        let response = await sendMail('This is an email sent from MyEquibrand, as a contact request message', session.user?.name);
         console.log(response);
     }
 
