@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faMapPin } from '@fortawesome/free-solid-svg-icons';
+import ModalForm from '../../components/Modals/ModalForm';
 
 export default function SideBar({setoutSideNumber}) {
 
     const [number, setnumber] = useState('')
-    
+    const [modalVisable, setModalVisable] = useState(false);
+
 
     const handleChange = (e) => {
         setnumber(e.target.value);
@@ -18,9 +20,18 @@ export default function SideBar({setoutSideNumber}) {
         }
     }
 
+    const handleModalCancelClick = () => {
+        setModalVisable((prev) => !prev);
+    }
+
+
     return (
         <div class="flex flex-col w-2/6 h-screen px-4 py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
         <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">My Equibrand</h2>
+
+        {
+            modalVisable && <ModalForm setModalVisable={handleModalCancelClick} />
+        }
 
         <div class="relative mt-6">
             {/* <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -82,8 +93,8 @@ export default function SideBar({setoutSideNumber}) {
             </nav>
 
             <div class="flex items-center px-4 -mx-2">
-                <img class="object-cover mx-2 rounded-full h-9 w-9" src="http://www.learntocodewithleo.com/Images/Leo.jpg" alt="avatar"/>
-                <h4 class="mx-2 font-medium text-gray-800 dark:text-gray-200 hover:underline">Leo Garza</h4>
+            <button onClick={() => setModalVisable(!modalVisable)} className='bg-gray-400 px-4 py-2 text-white rounded-md shadow-sm hover:scale-105 hover:shadow-lg transition-all duration-150'>Contact</button>
+
             </div>
         </div>
         </div>
