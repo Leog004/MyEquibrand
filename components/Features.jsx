@@ -10,8 +10,7 @@ export default function Features() {
 
     const handleVideo = () =>{
         
-        if(video) setvideo(false);
-        if(!video) setvideo(true);
+        setvideo(video => !video)
 
     }
 

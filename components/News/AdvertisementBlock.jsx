@@ -13,6 +13,9 @@ export default function AdvertisementBlock({el}) {
         clipPathShape = 'ellipse(100% 100% at 100% 100%)';
     }
 
+    if(el.imageBlockStyle === 'Full_Square')
+    clipPathShape = 'none';
+
     switch(el.blockPosition){
 
         case 'Right': {
