@@ -19,7 +19,7 @@ export default function Footer() {
               <div className="flex flex-wrap items-top mb-6">
                 <div className="w-full lg:w-4/12 px-4 ml-auto">
                   <span className="block uppercase text-gray-400 text-sm font-semibold mb-2">Useful Links</span>
-                  <ul className="list-unstyled">
+                  <ul className="list-unstyled grid grid-cols-2 gap-x-40">
                     <li>
                       <Link href={'/Products'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Products</a></Link>
                     </li>
@@ -35,9 +35,12 @@ export default function Footer() {
                     <li>
                       <Link href={'/iShare'} ><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">iShare</a></Link>
                     </li>
+                    <li>
+                      <Link href={'/Catelog'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Catelog</a></Link>
+                    </li>
                   </ul>
                 </div>
-                <div className="w-full lg:w-4/12 px-4">
+                {/* <div className="w-full lg:w-4/12 px-4">
                   <span className="block uppercase text-gray-400 text-sm font-semibold mb-2">Other Resources</span>
                   <ul className="list-unstyled">
                     <li>
@@ -53,7 +56,7 @@ export default function Footer() {
                       <Link href={'#'}><a className="text-white hover:text-gray-500 font-semibold block pb-2 text-sm" href="#">Contact Us</a></Link>
                     </li>
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
