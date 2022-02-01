@@ -458,3 +458,96 @@ export const GetVideos = async (brand) => {
     }
 
 }
+
+
+export const GetAdvertisementPopsByBrand = async (brand) => {
+
+    if(brand !== 'All'){
+        const query = gql`
+        query AdvertisementPopsByBrand{
+            advertisementPops(where: {brand: {title: $brand}}){
+                brand {
+                    title
+                }
+                popType
+                image {
+                    id
+                    url
+                    fileName
+                }
+                price
+                sku
+                title
+                description
+                } 
+            }
+         }      
+    `;
+
+    const variables = {
+        brand
+    }
+    const result = await request(graphqlAPI, query, variables);
+    return result.advertisementPops;
+    }else{
+            const query = gql`
+            query AdvertisementPops {
+                advertisementPops {
+                brand {
+                    title
+                }
+                popType
+                image {
+                    id
+                    url
+                    fileName
+                }
+                price
+                sku
+                title
+                description
+                }
+        }      
+        `;
+
+        const result = await request(graphqlAPI, query);
+
+        const validBrands = new Set(result.advertisementPops.map((el) => {
+            return el.brand.title
+        }));
+
+        
+
+        return {
+            result: result.advertisementPops,
+            valid : validBrands
+        } 
+    }
+
+
+}
+
+
+export const GetAdvertisementGraphicsByBrand = async (brand) => {
+    
+    const query = gql`
+        query GetAdvertisementByBrand($brand: String!) {
+            advertisementGraphics(where:{brand: {title: $brand}}){
+                brand {
+                    title
+                }
+                graphicAsset {
+                    id
+                    url
+                    fileName
+                    mimeType
+                }
+                graphicName
+            }
+        }
+    `;
+
+    const result = await request(graphqlAPI, query, {brand});
+    return result.advertisementGraphics;
+
+}

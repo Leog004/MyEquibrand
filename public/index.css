@@ -87,3 +87,10 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
 }
+
+.react-multi-carousel-item{
+  height: 100% !important;
+  width: 200px !important;
+  margin: 0 10px;
+  align-self: center;
+}
