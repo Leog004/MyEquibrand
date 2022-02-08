@@ -1,35 +1,35 @@
 import React,{useState, useEffect} from 'react'
-import { GraphicItem, HeaderBlock, PopItem } from '../../components'
-import { getAdvertisementGraphic, getAdvertisementPop, getNews } from '../../services'
+import { HeaderBlock, GraphicItem } from '../../components'
+import { getAdvertisementGraphic, getAdvertisementPop, GetAdvertisementPopsByBrand } from '../../services'
 import { getSession } from 'next-auth/react'
 import { validBrands } from '../../services/utils'
 import Head from 'next/head'
+import "react-multi-carousel/lib/styles.css";
+import CarouselSimple from '../../components/Helpers/Carousel'
 
-export default function index({pops, brands, graphics}) {
+export default function newPage({brands, pops, graphics, deviceType}) {
 
-    const [validBrands, setvalidBrands] = useState(brands)
-    const [pop, setPop] = useState(true);
-    const [graphic, setGraphic] = useState(false);
-    
-    const handleShowClick = (el) => {
+    const [selectedBrand, setSelectedBrand] = useState(brands.length > 0 ? brands[0].brand : 'All'); // this will carry the state of our brand
+    const selectionOptions = brands.map((el) => (<option key={el.brand} value={el.brand}>{el.brand}</option>));
+    const [advpop, setAdvpop] = useState([]);
+    const [advgraph, setAdvgraph] = useState([]);
+    const [brandsBySelection, setBrandsBySelection] = useState([]);
 
-        const editedTask = validBrands.map(task => {
-            if(el.brand === task.brand){
-                return {
-                    ...task,
-                    show: el.show = !el.show
-                }
-            }
-
-            return task;
-        })
-
-        setvalidBrands(editedTask);
+    const handleBrandChange = (e) => {
+        setSelectedBrand(e.target.value); // Changing the value of our select brand state by getting the value of our <option value>
     }
 
-    return (
-        <>
-            <Head>
+
+    useEffect(() => {
+        GetAdvertisementPopsByBrand(selectedBrand).then((result) => {
+            setAdvpop(result.result);
+            setBrandsBySelection([...result.valid]);
+        });
+    }, [selectedBrand])
+
+    
+  return <main>
+              <Head>
                {/* Title */}
                <title>MyEquibrand Advertisement</title>
                 {/* Meta Tag */}
@@ -41,98 +41,84 @@ export default function index({pops, brands, graphics}) {
                 title={"Advertisement"} 
                 description={'This is your source for available Point-Of-Purchase signage, banners and merchandising tools. Everything you need to enhance your merchandising displays is here, ready to attract customers and increase sales.'}        
             />
+
             
-        {/* Advertisemnet Filters / controls */}
-            <div className="flex justify-center mb-5 bg-gray-100 h-28 items-center flex-wrap">
+
+            {/* Brand Selection */}
+                <section className="mt-6 lg:mt-10 lg:px-2 lg:w-4/5 mx-auto">
+                        <div className="flex items-center justify-between text-sm tracking-widest uppercase">
+                            <div></div>
+                            <div className="flex items-center">
+                                <p className="text-gray-500 dark:text-gray-300">Brand</p>
+                                <select value={selectedBrand} onChange={handleBrandChange} className="cursor-pointer font-medium text-gray-700 bg-transparent dark:text-gray-500 focus:outline-none border-none">
+                                    {selectionOptions}
+                                </select>
+                            </div>
+                        </div>
+                </section>
+
+
+            {/* Pops */}
+            <section class="text-gray-600 body-font">
                 {
-                    brands.length > 0 ? brands.map((el, index) => (
-                        <button onClick={() => handleShowClick(el)}  key={el.brand} className={`h-10 mx-4 px-4 py-2 -mb-px text-sm text-center ${el.show ? 'border-green-500 text-green-600' : 'border-gray-200 text-gray-200'}  bg-transparent border-b-2  sm:text-base whitespace-nowrap focus:outline-none`}>
-                            {el.brand}
-                        </button>
-                    ))
-                    : <h1>There is no brands assigned to your profile. Please contact us.</h1>
-                }
-            </div>
-
-            <div className="flex items-center justify-center mb-10">
-                <div className="flex space-x-10">
-                    <label className="inline-flex items-center mt-3">
-                        <input onChange={(e) => setPop((pop) => !pop)} type="checkbox" className="cursor-pointer form-checkbox h-5 w-5 rounded-full text-red-600" checked={pop} />
-                        <span className="ml-2 text-gray-700">Store Pop</span>
-                    </label>
-                    {/* <label className="inline-flex items-center mt-3">
-                        <input onChange={(e) => setGraphic((graph) => !graph)} type="checkbox" className="form-checkbox h-5 w-5 rounded-full text-red-600 cursor-pointer" checked={graphic} />
-                        <span className="ml-2 text-gray-700">Graphics</span>
-                    </label>                     */}
-                </div>
-            </div>
-
-
-            {/* Store Pops and Filters */}
-
-            <div className='max-w-6xl w-full mx-auto mb-20'>
-                <div className='flex flex-col space-y-10'>
-
-                {
-                    pop &&
-                        brands.map((el) => (
-                            el.show &&
-                            <div className={'flex flex-col border-b-2 pb-10 px-10'}>
-                                <div className='flex'>
-                                    <h1 className='text-5xl font-semibold py-10'>{el.brand}</h1>
-                                </div>
-                                <div className='grid grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-10 md:gap-x-20 md:gap-y-20 w-full h-full'>
-                                    {
-                                        pops.map((pop) => (
-                                            el.brand === pop.brand.title &&
-                                            <PopItem key={pop.description} image={pop.image.url} title={pop.title} description={pop.description} price={pop.price} />
-                                        ))
-                                    }
-                                </div>                                
-                                {
-    
-                                    <div className='w-full overflow-hidden mt-20 bg-gray-200 pt-2 rounded-lg'>
-                                        <h2 className='pl-10 pt-2 pb-2 font-semibold uppercase text-gray-700 w-full border-b-2 border-gray-300'>Graphics <span className='text-red-400 text-xs'>(Click image to download)</span></h2>
-                                        <div className='flex justify-between items-center w-full overflow-x-scroll gap-x-24 overflow-hidden graphic_scroll'>
-                                                {
-                                                    graphics.map((graph) => (
-                                                        el.brand === graph.brand.title &&
-                                                        <GraphicItem key={graph.GraphicName} asset={graph.graphicAsset} image={graph.graphicAsset[0].url} />
-                                                    ))
-                                                }
+                    brandsBySelection.length > 0 && brandsBySelection.map((brand) => (
+                    <div key={brand} class="container px-5 py-24 mx-auto">
+                        <div class="flex flex-wrap w-full mb-20">
+                            <div class="lg:w-1/2 w-full mb-6 lg:mb-0">
+                                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">{brand}</h1>
+                                <div class="h-1 w-20 bg-blue-500 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -m-4 items-end">
+                        {
+                            advpop.length > 0 && advpop.map((pop) => (
+                                
+                                    pop.brand.title === brand && (
+                                        
+                                    <div key={pop.title} class="xl:w-1/5 md:w-1/2 p-4">
+                                        <div class="bg-gray-100 p-2 rounded-lg shadow-md">
+                                            <img class="h-auto rounded w-full object-cover object-center mb-6" src={pop.image.url} alt="content" />
+                                            <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">{pop.title}</h3>
+                                            <h2 class="text-lg text-gray-900 font-medium title-font mb-4">${pop.price}</h2>
+                                            <p class="leading-relaxed text-base">{pop.description}</p>
                                         </div>
                                     </div>
-                                }
+                                      
+                                    )
+                                
+                            ))
+                        }
+                        </div>
 
-                            </div>    
-                        ))
-                    }
-                    {
-                    graphic && 
-                         brands.map((el) => (
-                             el.show && 
-                             <div key={el.brand} className={'w-full mx-auto my-0'}>
-                                    {/* <h1 className='text-5xl font-semibold py-10'>{el.brand}</h1> */}
+                        <div className='w-full overflow-hidden mt-20 bg-gray-200 pt-2 rounded-lg'>
+                            <h2 className='pl-10 pt-2 pb-2 font-semibold uppercase text-gray-700 w-full border-b-2 border-gray-300'>Graphics <span className='text-red-400 text-xs'>(Click image to download)</span></h2>
+                        </div>
+                        <CarouselSimple deviceType={deviceType} brand={brand} />
+                        {/* <div className='w-full overflow-hidden mt-20 bg-gray-200 pt-2 rounded-lg'>
+                            <h2 className='pl-10 pt-2 pb-2 font-semibold uppercase text-gray-700 w-full border-b-2 border-gray-300'>Graphics <span className='text-red-400 text-xs'>(Click image to download)</span></h2>
+                            <div className='flex justify-between items-center w-full overflow-x-scroll gap-x-24 overflow-hidden graphic_scroll'>
                             
-                                <div className='w-full overflow-hidden'>
-                                    <div className='flex justify-between items-center w-full overflow-x-scroll gap-x-32'>
-                                {
-                                    graphics.map((graph) => (
-                                        el.brand === graph.brand.title &&
-                                        <GraphicItem key={graph.title} image={graph.graphicAsset[0].url} />
-                                    ))
-                                }
-                                    </div>
-                                </div>
+                           
+
+                                    {
+
+                                        graphics.map((graph) => (
+                                            brand === graph.brand.title &&
+                                            <GraphicItem key={graph.GraphicName} asset={graph.graphicAsset} image={graph.graphicAsset[0].url} />
+                                        ))
+                                    }
                             </div>
-                         ))
-                    }                   
-                </div>
-            </div>
-           
-        </>
-    )
+                        </div> */}
+
+                    </div>
+                ))
+            }
+
+            </section>
+
+        </main>
 }
+
 
 
 // this method runs when page is loaded. Pulls data from server
@@ -141,6 +127,14 @@ export async function getServerSideProps(context) {
     // checking to see whether the user is logged in
     const session = await getSession(context);
     var brands = []; // This array will contain the user brands
+
+
+    let isMobileView = (context.req
+        ? context.req.headers['user-agent']
+        : navigator.userAgent).match(
+          /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+        )
+    
 
     // if user is not logged in, we will redirect them to our home page
     if(!session){
@@ -152,24 +146,26 @@ export async function getServerSideProps(context) {
         };
     }
 
-
-
     try{
         // getting our advertisement data that is being called from service file
         var pops = (await getAdvertisementPop()) || [];
 
         var graphics  = (await getAdvertisementGraphic()) || [];
-        
+
+
         if(session){           
             session.state.map((el) => {
-                brands.push(el.Privilege);
+                brands.push(el.Privilege); // pushing user privalges into brands array
             })
 
-            brands = validBrands(brands);
+            brands = validBrands(brands); // this will go through the brand array and return distinct valid brands that the user can view
+            brands.unshift({brand: 'All', show: true}); // this is a custom insert called All that which act as a brand that will show all products, inserting in the beginning of the array
+        
         }
+
     
         return {
-            props: { pops, brands, graphics }, // return them to our front end as props
+            props: { brands, pops, graphics, deviceType: isMobileView }, // return them to our front end as props
           };
 
     }catch(err){
