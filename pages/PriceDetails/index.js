@@ -14,11 +14,11 @@ export default function index() {
             },
             {
                 Title : '2022 PRODUCT DETAILS & PRICING',
-                Asset : '/assets/Excel/EquibrandDealerPricingUpdate2022-Domestic.xlsx'
+                Asset : '/assets/Excel/EquibrandDealerPricing2022-Domestic.xlsx'
             },
             {
                 Title : '2022 PRODUCTS WITH PRICE CHANGE',
-                Asset : '/assets/Excel/EQ ITEMS WITH PRICE CHANGE 12-20-2021.xlxs'
+                Asset : '/assets/Excel/EQITEMSWITHPRICECHANGE2021.xlsx'
             },
         ]
 
